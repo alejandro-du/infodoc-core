@@ -25,6 +25,7 @@ public abstract class InfodocConstants extends Constants {
 	public static final String uiLogout = Utils.getProperty("ui.logout");
 	public static final String uiAbout = Utils.getProperty("ui.about");
 	public static final String uiUserManual = Utils.getProperty("ui.userManual");
+	public static final String uiUserManualPdfName = Utils.getProperty("ui.userManualPdfName");
 	public static final String uiCurrentPassword = Utils.getProperty("ui.currentPassword");
 	public static final String uiNewPassword = Utils.getProperty("ui.newPassword");
 	public static final String uiConfirmNewPassword = Utils.getProperty("ui.confirmNewPassword");
@@ -53,6 +54,8 @@ public abstract class InfodocConstants extends Constants {
 	public static final String uiHour = Utils.getProperty("ui.hour");
 	public static final String uiMinute = Utils.getProperty("ui.minute");
 	public static final String uiSecond = Utils.getProperty("ui.second");
+	public static final String uiDefaultUserGroupName = Utils.getProperty("ui.defaultUserGroupName");
+	
 	public static final String uiColorYellow = Utils.getProperty("ui.colorYellow");
 	public static final String uiColorBlue = Utils.getProperty("ui.colorBlue");
 	public static final String uiColorRed = Utils.getProperty("ui.colorRed");
@@ -76,7 +79,7 @@ public abstract class InfodocConstants extends Constants {
 	public static final String uiJavaReports = Utils.getProperty("ui.javaReports");
 	public static final String uiNotifications = Utils.getProperty("ui.notifications");
 	public static final String uiNotificationInstances = Utils.getProperty("ui.notificationInstances");
-	public static final String uiNumeration = Utils.getProperty("ui.numeration");
+	public static final String uiNumerations = Utils.getProperty("ui.numerations");
 	public static final String uiProcesses = Utils.getProperty("ui.processes");
 	public static final String uiProcessInstances = Utils.getProperty("ui.processInstances");
 	public static final String uiProperties = Utils.getProperty("ui.properties");

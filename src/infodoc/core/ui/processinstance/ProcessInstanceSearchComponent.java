@@ -40,7 +40,7 @@ public class ProcessInstanceSearchComponent extends CustomComponent implements C
 	private Process process;
 	private final User user;
 	
-	private ProcessInstancePagedList pagedInstancesComponent;
+	private ProcessInstancesPagedList pagedInstancesComponent;
 	private ProcessInstanceForm form;
 	private TextField number = new TextField(InfodocConstants.uiProcessNumber);
 	private DateField startingDate = new DateField(InfodocConstants.uiStarting);
@@ -80,7 +80,7 @@ public class ProcessInstanceSearchComponent extends CustomComponent implements C
 		leftLayout.setMargin(true);
 		leftLayout.addComponent(formPanel);
 		
-		pagedInstancesComponent = new ProcessInstancePagedList();
+		pagedInstancesComponent = new ProcessInstancesPagedList();
 		
 		VerticalLayout rightLayout = new VerticalLayout();
 		rightLayout.setMargin(true);

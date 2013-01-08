@@ -80,9 +80,9 @@ public class ProcessInstancePrintService {
 		}
 		
 		output = output
-			.replaceAll(":company", InfodocConstants.infodocCompanyName)
-			.replaceAll(":number", processInstance.toString())
-			.replaceAll(":firstActivityInstanceDate", firstActivityInstanceDate);
+			.replace("$company", InfodocConstants.infodocCompanyName)
+			.replace("${number}", processInstance.toString())
+			.replace("${firstActivityInstanceDate}", firstActivityInstanceDate);
 		
 		return output;
 	}

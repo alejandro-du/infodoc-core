@@ -8,7 +8,7 @@ import infodoc.core.dto.User;
 import infodoc.core.ui.activity.ActivityExecutor;
 import infodoc.core.ui.comun.InfodocTheme;
 import infodoc.core.ui.processinstance.ProcessInstanceForm;
-import infodoc.core.ui.processinstance.ProcessInstanceList;
+import infodoc.core.ui.processinstance.ProcessInstancesList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public abstract class ActivityListExecutorTemplate extends ActivityExecutor impl
 	
 	private static final long serialVersionUID = 1L;
 	
-	protected ProcessInstanceList processInstanceList;
+	protected ProcessInstancesList processInstanceList;
 	protected Button updateButton = new Button();
 	protected Button executeForAllButton = new Button();
 	protected List<ProcessInstance> processInstances;
@@ -66,7 +66,7 @@ public abstract class ActivityListExecutorTemplate extends ActivityExecutor impl
 		buttonsLayout.addComponent(updateButton);
 		buttonsLayout.addComponent(executeForAllButton);
 		
-		processInstanceList = new ProcessInstanceList();
+		processInstanceList = new ProcessInstancesList();
 		addProcessInstances();
 		
 		Panel processInstancesPanel = new Panel();

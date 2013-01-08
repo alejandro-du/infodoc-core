@@ -8,14 +8,14 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
-public class ProcessInstanceList extends CustomComponent {
+public class ProcessInstancesList extends CustomComponent {
 
 	private static final long serialVersionUID = 1L;
 	
 	protected VerticalLayout layout;
 	protected VerticalLayout instancesLayout;
 	
-	public ProcessInstanceList() {
+	public ProcessInstancesList() {
 		instancesLayout = new VerticalLayout();
 		
 		layout = new VerticalLayout();

@@ -12,7 +12,7 @@ import org.vaadin.pagingcomponent.PagingComponent;
 import org.vaadin.pagingcomponent.PagingComponent.ChangePageEvent;
 import org.vaadin.pagingcomponent.PagingComponent.PagingComponentListener;
 
-public class ProcessInstancePagedList extends ProcessInstanceList implements PagingComponentListener<Long> {
+public class ProcessInstancesPagedList extends ProcessInstancesList implements PagingComponentListener<Long> {
 
 	private static final long serialVersionUID = 1L;
 	

@@ -52,7 +52,7 @@ public class ProcessInstanceBox extends CustomComponent {
 		formLayout = new FormLayout();
 		formLayout.setMargin(false);
 		
-		activityInstancesPanel = new Panel(InfodocConstants.uiActivitiesInstances);
+		activityInstancesPanel = new Panel(InfodocConstants.uiActivitHistory);
 		activityInstancesPanel.setStyleName(InfodocTheme.PANEL_ACTIVITY_INSTANCES);
 		activityInstancesPanel.setWidth("100%");
 		

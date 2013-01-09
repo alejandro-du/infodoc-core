@@ -14,7 +14,7 @@ import enterpriseapp.hibernate.annotation.CrudTable;
 import enterpriseapp.hibernate.dto.Dto;
 
 @Entity
-@Table(name="java_report", uniqueConstraints={@UniqueConstraint(columnNames={"name", "user_group_id", "process_id"})})
+@Table(name="java_report", uniqueConstraints={@UniqueConstraint(columnNames={"name", "user_group_id", "form_id"})})
 @CrudTable(filteringPropertyName="name")
 public class JavaReport extends Dto {
 
@@ -42,8 +42,8 @@ public class JavaReport extends Dto {
 	private UserGroup userGroup;
 	
 	@ManyToOne
-	@JoinColumn(name="process_id")
-	private Process process;
+	@JoinColumn(name="form_id")
+	private Form form;
 	
 	@Override
 	public String toString() {
@@ -104,12 +104,12 @@ public class JavaReport extends Dto {
 		this.userGroup = userGroup;
 	}
 
-	public Process getProcess() {
-		return process;
+	public Form getForm() {
+		return form;
 	}
 
-	public void setProcess(Process process) {
-		this.process = process;
+	public void setForm(Form form) {
+		this.form = form;
 	}
 	
 }

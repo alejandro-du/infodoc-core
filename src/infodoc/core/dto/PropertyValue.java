@@ -30,7 +30,7 @@ import enterpriseapp.hibernate.annotation.Downloadable;
 import enterpriseapp.hibernate.dto.Dto;
 
 @Entity
-@Table(name="property_value", uniqueConstraints={@UniqueConstraint(columnNames={"process_instance_id", "property_id"})})
+@Table(name="property_value", uniqueConstraints={@UniqueConstraint(columnNames={"case_id", "property_id"})})
 @CrudTable(filteringPropertyName="id")
 public class PropertyValue extends Dto implements Serializable, Comparator<PropertyValue>, Comparable<PropertyValue> {
 
@@ -46,8 +46,8 @@ public class PropertyValue extends Dto implements Serializable, Comparator<Prope
 	private Property property;
 	
 	@ManyToOne
-	@JoinColumn(name="process_instance_id", nullable=false)
-	private ProcessInstance processInstance;
+	@JoinColumn(name="case_id", nullable=false)
+	private Case caseDto;
 
 	@Column(name="long_value")
 	private Long longValue;
@@ -73,15 +73,15 @@ public class PropertyValue extends Dto implements Serializable, Comparator<Prope
 	
 	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(
-		name="property_value_has_process_instance"
+		name="property_value_has_case"
 		, joinColumns={
 			@JoinColumn(name="property_value_id")
 		}
 		, inverseJoinColumns={
-			@JoinColumn(name="process_instance_id")
+			@JoinColumn(name="case_id")
 		}
 	)
-	private Set<ProcessInstance> processInstancesValue;
+	private Set<Case> caseDtosValue;
 	
 	@Column(name="date_value")
 	@Temporal(TemporalType.DATE)
@@ -125,12 +125,12 @@ public class PropertyValue extends Dto implements Serializable, Comparator<Prope
 		this.property = property;
 	}
 
-	public ProcessInstance getProcessInstance() {
-		return processInstance;
+	public Case getCase() {
+		return caseDto;
 	}
 
-	public void setProcessInstance(ProcessInstance processInstance) {
-		this.processInstance = processInstance;
+	public void setCase(Case caseDto) {
+		this.caseDto = caseDto;
 	}
 
 	public Long getLongValue() {
@@ -165,12 +165,12 @@ public class PropertyValue extends Dto implements Serializable, Comparator<Prope
 		this.classificationsValueValue = classificationsValueValue;
 	}
 	
-	public Set<ProcessInstance> getProcessInstancesValue() {
-		return processInstancesValue;
+	public Set<Case> getCasesValue() {
+		return caseDtosValue;
 	}
 	
-	public void setProcessInstancesValue(Set<ProcessInstance> processInstancesValue) {
-		this.processInstancesValue = processInstancesValue;
+	public void setCasesValue(Set<Case> caseDtosValue) {
+		this.caseDtosValue = caseDtosValue;
 	}
 	
 	public Date getDateValue() {

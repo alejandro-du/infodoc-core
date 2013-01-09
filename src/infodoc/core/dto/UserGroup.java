@@ -42,8 +42,8 @@ public class UserGroup extends Dto implements Serializable {
 	@Column(name="access_admin_user_groups", nullable=false)
 	private boolean accessAdminUserGroups;
 	
-	@Column(name="access_admin_process_instances", nullable=false)
-	private boolean accessAdminProcessInstances;
+	@Column(name="access_admin_forms", nullable=false)
+	private boolean accessAdminCases;
 	
 	@Column(name="access_admin_property_values", nullable=false)
 	private boolean accessAdminPropertyValues;
@@ -78,8 +78,8 @@ public class UserGroup extends Dto implements Serializable {
 	@Column(name="access_config_numeration", nullable=false)
 	private boolean accessConfigNumeration;
 	
-	@Column(name="access_config_processes", nullable=false)
-	private boolean accessConfigProcesses;
+	@Column(name="access_config_forms", nullable=false)
+	private boolean accessConfigForms;
 	
 	@Column(name="access_config_activities", nullable=false)
 	private boolean accessConfigActivities;
@@ -111,15 +111,15 @@ public class UserGroup extends Dto implements Serializable {
 	
     @ManyToMany
 	@JoinTable(
-		name="user_group_searches_process"
+		name="user_group_searches_form"
 		, joinColumns={
 			@JoinColumn(name="user_group_id")
 		}
 		, inverseJoinColumns={
-			@JoinColumn(name="process_id")
+			@JoinColumn(name="form_id")
 		}
 	)
-	private Set<Process> accessSearchProcess;
+	private Set<Form> accessSearchForm;
 	
     @ManyToMany
 	@JoinTable(
@@ -303,12 +303,12 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessConfigNumeration = accessConfigNumeration;
 	}
 
-	public boolean getAccessConfigProcesses() {
-		return accessConfigProcesses;
+	public boolean getAccessConfigForms() {
+		return accessConfigForms;
 	}
 
-	public void setAccessConfigProcesses(boolean accessConfigProcesses) {
-		this.accessConfigProcesses = accessConfigProcesses;
+	public void setAccessConfigForms(boolean accessConfigForms) {
+		this.accessConfigForms = accessConfigForms;
 	}
 
 	public boolean getAccessConfigActivities() {
@@ -343,12 +343,12 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessConfigClassificationValues = accessConfigClassificationValues;
 	}
 
-	public boolean getAccessAdminProcessInstances() {
-		return accessAdminProcessInstances;
+	public boolean getAccessAdminCases() {
+		return accessAdminCases;
 	}
 
-	public void setAccessAdminProcessInstances(boolean accessAdminProcessInstances) {
-		this.accessAdminProcessInstances = accessAdminProcessInstances;
+	public void setAccessAdminCases(boolean accessAdminCases) {
+		this.accessAdminCases = accessAdminCases;
 	}
 
 	public boolean getAccessAdminPropertyValues() {
@@ -407,12 +407,12 @@ public class UserGroup extends Dto implements Serializable {
 		this.parentUserGroup = parentUserGroup;
 	}
 
-	public Set<Process> getAccessSearchProcess() {
-		return accessSearchProcess;
+	public Set<Form> getAccessSearchForm() {
+		return accessSearchForm;
 	}
 	
-	public void setAccessSearchProcess(Set<Process> accessSearchProcess) {
-		this.accessSearchProcess = accessSearchProcess;
+	public void setAccessSearchForm(Set<Form> accessSearchForm) {
+		this.accessSearchForm = accessSearchForm;
 	}
 	
 	public Set<User> getUsers() {

@@ -14,7 +14,7 @@ public class PropertyValueContainer extends UserGroupFilteredContainer<PropertyV
 	private static final long serialVersionUID = 1L;
 
 	public PropertyValueContainer() {
-		super(PropertyValue.class, "processInstance.process.userGroup.id");
+		super(PropertyValue.class, "caseDto.form.userGroup.id");
 	}
 	
 	public Serializable saveOrUpdateEntity(PropertyValue propertyValue) {
@@ -51,7 +51,7 @@ public class PropertyValueContainer extends UserGroupFilteredContainer<PropertyV
 				value = propertyValue.getClassificationsValueValue();
 				
 			} else if(fieldWrapper.getType().equals(FieldType.PROCESS_INSTANCES)) {
-				value = propertyValue.getProcessInstancesValue();
+				value = propertyValue.getCasesValue();
 				
 			} else if(fieldWrapper.getType().equals(FieldType.DATE)) {
 				value = propertyValue.getDateValue();
@@ -86,8 +86,8 @@ public class PropertyValueContainer extends UserGroupFilteredContainer<PropertyV
 		} else if(propertyValue.getClassificationsValueValue() != null && !propertyValue.getClassificationsValueValue().isEmpty()) {
 			value = propertyValue.getClassificationsValueValue().toString().replace("[", "").replace("]", "");
 			
-		} else if(propertyValue.getProcessInstancesValue() != null && !propertyValue.getProcessInstancesValue().isEmpty()) {
-			value = propertyValue.getProcessInstancesValue().toString().replace("[", "").replace("]", "");
+		} else if(propertyValue.getCasesValue() != null && !propertyValue.getCasesValue().isEmpty()) {
+			value = propertyValue.getCasesValue().toString().replace("[", "").replace("]", "");
 			
 		} else if(propertyValue.getDateValue() != null) {
 			value = Utils.dateToString(propertyValue.getDateValue());

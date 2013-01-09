@@ -1,18 +1,18 @@
-package infodoc.core.ui.processinstance;
+package infodoc.core.ui.cases;
 
 import infodoc.core.InfodocConstants;
 import infodoc.core.container.InfodocContainerFactory;
 import infodoc.core.dto.Property;
 import infodoc.core.dto.ClassificationValue;
 import infodoc.core.dto.PropertyValue;
-import infodoc.core.dto.ProcessInstance;
-import infodoc.core.dto.Process;
+import infodoc.core.dto.Case;
+import infodoc.core.dto.Form;
 import infodoc.core.dto.Activity;
 import infodoc.core.dto.User;
 import infodoc.core.dto.Validation;
 import infodoc.core.field.FieldFactory;
 import infodoc.core.field.FieldType;
-import infodoc.core.ui.comun.InfodocTheme;
+import infodoc.core.ui.common.InfodocTheme;
 import infodoc.core.ui.validator.ValidatorFactory;
 
 import java.util.ArrayList;
@@ -23,14 +23,13 @@ import java.util.Set;
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.Form;
 import com.vaadin.ui.TextField;
 
-public class ProcessInstanceForm extends Form {
+public class CaseForm extends com.vaadin.ui.Form {
 
 	private static final long serialVersionUID = 1L;
 	
-	protected ProcessInstance instance;
+	protected Case instance;
 	protected Activity activity;
 	protected User user;
 	protected List<Property> properties;
@@ -39,15 +38,15 @@ public class ProcessInstanceForm extends Form {
 	protected boolean showShearchProperties;
 	protected TextField commentsTextField;
 	
-	public ProcessInstanceForm(ProcessInstance instance, Activity activity, User user) {
+	public CaseForm(Case instance, Activity activity, User user) {
 		this(instance, activity, user, false);
 	}
 	
-	public ProcessInstanceForm(ProcessInstance instance, Activity activity, User user, boolean focus) {
+	public CaseForm(Case instance, Activity activity, User user, boolean focus) {
 		this(instance, activity, user, focus, false, false);
 	}
 	
-	public ProcessInstanceForm(ProcessInstance instance, Activity activity, User user, boolean focus, boolean showAllProperties, boolean showShearchProperties) {
+	public CaseForm(Case instance, Activity activity, User user, boolean focus, boolean showAllProperties, boolean showShearchProperties) {
 		this.instance = instance;
 		this.activity = activity;
 		this.user = user;
@@ -70,9 +69,9 @@ public class ProcessInstanceForm extends Form {
 	
 	public void createProperties() {
 		if(showAllProperties) {
-			properties = InfodocContainerFactory.getPropertyContainer().findByProcessId(instance.getProcess().getId());
+			properties = InfodocContainerFactory.getPropertyContainer().findByFormId(instance.getForm().getId());
 		} else {
-			properties = InfodocContainerFactory.getPropertyContainer().findByUserIdAndProcessIdAndActivityId(user.getId(), instance.getProcess().getId(), activity.getId());
+			properties = InfodocContainerFactory.getPropertyContainer().findByUserIdAndFormIdAndActivityId(user.getId(), instance.getForm().getId(), activity.getId());
 		}
 		
 		try {
@@ -81,9 +80,9 @@ public class ProcessInstanceForm extends Form {
 				Field field;
 				
 				if(showShearchProperties) {
-					field = fieldWrapper.getSearchField(property, this, activity, instance.getProcess(), getApplication());
+					field = fieldWrapper.getSearchField(property, this, activity, instance.getForm(), getApplication());
 				} else {
-					field = fieldWrapper.getField(property, this, activity, instance.getProcess(), getApplication());
+					field = fieldWrapper.getField(property, this, activity, instance.getForm(), getApplication());
 				}
 				
 				if(property.getIcon() != null && !property.getIcon().isEmpty()) {
@@ -106,7 +105,7 @@ public class ProcessInstanceForm extends Form {
 				field.setCaption(property.getName());
 				field.setRequired(property.getRequired() && !showShearchProperties);
 				
-				Object value = InfodocContainerFactory.getProcessInstanceContainer().getValue(instance, property);
+				Object value = InfodocContainerFactory.getCaseContainer().getValue(instance, property);
 				
 				if(value != null) {
 					field.setValue(value);
@@ -153,7 +152,7 @@ public class ProcessInstanceForm extends Form {
 		}
 	}
 	
-	public PropertyValue getPropertyValue(ProcessInstance instance, Property property) {
+	public PropertyValue getPropertyValue(Case instance, Property property) {
 		if(instance.getPropertyValues() != null) {
 			for(PropertyValue value : instance.getPropertyValues()) {
 				if(value.getProperty().equals(property)) {
@@ -182,7 +181,7 @@ public class ProcessInstanceForm extends Form {
 					value.setProperty(property);
 				}
 				
-				value.setProcessInstance(instance);
+				value.setCase(instance);
 				values.add(value);
 				
 				if(field.getValue() != null && field.isVisible()) {
@@ -207,8 +206,8 @@ public class ProcessInstanceForm extends Form {
 							value.setClassificationsValueValue(classificationValues);
 							
 						} else if(fieldWrapper.getType().equals(FieldType.PROCESS_INSTANCES)) {
-							Set<ProcessInstance> processInstances = (Set<ProcessInstance>) field.getValue();
-							value.setProcessInstancesValue(processInstances);
+							Set<Case> caseDtos = (Set<Case>) field.getValue();
+							value.setCasesValue(caseDtos);
 							
 						} else if(fieldWrapper.getType().equals(FieldType.DATE)) {
 							value.setDateValue((Date) field.getValue());
@@ -234,7 +233,7 @@ public class ProcessInstanceForm extends Form {
 	
 	@Override
     public void validate() throws InvalidValueException {
-		List<Property> properties = InfodocContainerFactory.getPropertyContainer().findByUserIdAndProcessIdAndActivityId(user.getId(), instance.getProcess().getId(), activity.getId());
+		List<Property> properties = InfodocContainerFactory.getPropertyContainer().findByUserIdAndFormIdAndActivityId(user.getId(), instance.getForm().getId(), activity.getId());
 		List<PropertyValue> values = getPropertyValues();
 		
 		for(PropertyValue value : values) {
@@ -247,14 +246,14 @@ public class ProcessInstanceForm extends Form {
 	}
 	
 	public void clear() {
-		Process process = instance.getProcess();
-		instance = new ProcessInstance();
-		instance.setProcess(process);
+		Form form = instance.getForm();
+		instance = new Case();
+		instance.setForm(form);
 		removeAllProperties();
 		createProperties();
 	}
 
-	public ProcessInstance getProcessInstance() {
+	public Case getCase() {
 		return instance;
 	}
 	

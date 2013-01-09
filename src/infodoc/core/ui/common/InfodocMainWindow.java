@@ -1,4 +1,4 @@
-package infodoc.core.ui.comun;
+package infodoc.core.ui.common;
 
 import infodoc.core.InfodocConstants;
 import infodoc.core.dto.User;

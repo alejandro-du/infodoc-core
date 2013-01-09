@@ -27,9 +27,9 @@ import enterpriseapp.hibernate.annotation.CrudTable;
 import enterpriseapp.hibernate.dto.Dto;
 
 @Entity
-@Table(name="process_instance")
+@Table(name="case_")
 @CrudTable(filteringPropertyName="number")
-public class ProcessInstance extends Dto implements Serializable {
+public class Case extends Dto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -42,15 +42,15 @@ public class ProcessInstance extends Dto implements Serializable {
 	private Long number;
 	
 	@ManyToOne
-	@JoinColumn(name="process_id", nullable=false)
-	private Process process;
+	@JoinColumn(name="form_id", nullable=false)
+	private Form form;
 	
-	@OneToMany(mappedBy="processInstance", orphanRemoval=true)
+	@OneToMany(mappedBy="caseDto", orphanRemoval=true)
     @Basic(fetch=FetchType.EAGER)
     @Sort(type=SortType.COMPARATOR, comparator=PropertyValue.class)
 	private SortedSet<PropertyValue> propertyValues;
 	
-    @OneToMany(mappedBy="processInstance")
+    @OneToMany(mappedBy="caseDto")
     @OrderBy(value="executionTime")
     private Set<ActivityInstance> activityInstances;
 	
@@ -59,9 +59,9 @@ public class ProcessInstance extends Dto implements Serializable {
 		String string = "";
 		
 		if(number != null) {
-			if(process.getNumeration() != null) {
-				if(process.getNumeration().getPrefix() != null) {
-					string += process.getNumeration().getPrefix();
+			if(form.getNumeration() != null) {
+				if(form.getNumeration().getPrefix() != null) {
+					string += form.getNumeration().getPrefix();
 				}
 				
 				string += number;
@@ -73,7 +73,7 @@ public class ProcessInstance extends Dto implements Serializable {
 		if(propertyValues != null) {
 			boolean found = false;
 			PropertyValueContainer propertyValueContainer = InfodocContainerFactory.getPropertyValueContainer();
-			SortedSet<PropertyValue> propertyValues = InfodocContainerFactory.getProcessInstanceContainer().getEntity(id).getPropertyValues();
+			SortedSet<PropertyValue> propertyValues = InfodocContainerFactory.getCaseContainer().getEntity(id).getPropertyValues();
 			
 			for(PropertyValue propertyValue : propertyValues) {
 				if(propertyValue.getProperty().getShowInTitle()) {
@@ -118,12 +118,12 @@ public class ProcessInstance extends Dto implements Serializable {
 		this.number = numero;
 	}
 
-	public Process getProcess() {
-		return process;
+	public Form getForm() {
+		return form;
 	}
 
-	public void setProcess(Process process) {
-		this.process = process;
+	public void setForm(Form form) {
+		this.form = form;
 	}
 
 	public SortedSet<PropertyValue> getPropertyValues() {

@@ -1,7 +1,7 @@
 package infodoc.core.ui.fieldfactory;
 
 import infodoc.core.dto.User;
-import infodoc.core.ui.comun.InfodocTheme;
+import infodoc.core.ui.common.InfodocTheme;
 
 import com.vaadin.data.Item;
 import com.vaadin.ui.Component;
@@ -12,7 +12,7 @@ import com.vaadin.ui.TextArea;
 import enterpriseapp.EnterpriseApplication;
 import enterpriseapp.ui.crud.DefaultCrudFieldFactory;
 
-public class ProcessFieldFactory extends DefaultCrudFieldFactory {
+public class FormFieldFactory extends DefaultCrudFieldFactory {
 
 	private static final long serialVersionUID = 1L;
 	

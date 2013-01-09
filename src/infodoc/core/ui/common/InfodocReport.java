@@ -1,8 +1,8 @@
-package infodoc.core.ui.comun;
+package infodoc.core.ui.common;
 
 import infodoc.core.InfodocConstants;
 import infodoc.core.dto.JavaReport;
-import infodoc.core.dto.Process;
+import infodoc.core.dto.Form;
 import infodoc.core.dto.User;
 
 import java.awt.Color;
@@ -22,18 +22,18 @@ public abstract class InfodocReport extends AbstractReport {
 
 	private static final long serialVersionUID = 1L;
 	
-	protected Process process;
+	protected Form form;
 	protected final JavaReport javaReport;
 	
 	public abstract String getSubtitle();
 	
-	public InfodocReport(Process process, JavaReport javaReport) {
-		this.process = process;
+	public InfodocReport(Form form, JavaReport javaReport) {
+		this.form = form;
 		this.javaReport = javaReport;
 	}
 	
 	public String getTitle() {
-		return process.getName() + " - " + javaReport.getName();
+		return form.getName() + " - " + javaReport.getName();
 	}
 	
 	@Override

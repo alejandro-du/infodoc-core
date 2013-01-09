@@ -1,8 +1,8 @@
 package infodoc.core.container.validator;
 
 import infodoc.core.dto.JavaReport;
-import infodoc.core.dto.Process;
-import infodoc.core.ui.comun.InfodocReport;
+import infodoc.core.dto.Form;
+import infodoc.core.ui.common.InfodocReport;
 
 import java.lang.reflect.Constructor;
 
@@ -20,7 +20,7 @@ public class JavaReportJavaClassValidator extends AbstractValidator {
 	public boolean isValid(Object value) {
 		if(value != null && !value.toString().isEmpty()) {
 			try {
-				Constructor<?> constructor = Class.forName(value.toString()).getConstructor(Process.class, JavaReport.class);
+				Constructor<?> constructor = Class.forName(value.toString()).getConstructor(Form.class, JavaReport.class);
 				Object instance = constructor.newInstance(new Object[] {null, null});
 				
 				if(!InfodocReport.class.isAssignableFrom(instance.getClass())) {

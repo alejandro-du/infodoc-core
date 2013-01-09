@@ -3,7 +3,7 @@ package infodoc.core.ui.fieldfactory;
 import infodoc.core.InfodocConstants;
 import infodoc.core.container.validator.JavaReportJavaClassValidator;
 import infodoc.core.dto.JavaReport;
-import infodoc.core.ui.comun.InfodocTheme;
+import infodoc.core.ui.common.InfodocTheme;
 
 import java.util.LinkedHashSet;
 

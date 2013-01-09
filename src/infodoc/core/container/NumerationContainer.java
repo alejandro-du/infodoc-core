@@ -1,7 +1,7 @@
 package infodoc.core.container;
 
 import infodoc.core.dto.Numeration;
-import infodoc.core.dto.Process;
+import infodoc.core.dto.Form;
 
 import java.util.Calendar;
 
@@ -21,13 +21,13 @@ public class NumerationContainer extends UserGroupFilteredContainer<Numeration> 
 		}
 	}
 	
-	public synchronized Long getNextValue(Long processId) {
+	public synchronized Long getNextValue(Long formId) {
 		Long next = null;
 		
-		Process process = InfodocContainerFactory.getProcessContainer().getEntity(processId);
+		Form form = InfodocContainerFactory.getFormContainer().getEntity(formId);
 		
-		if(process != null && process.getNumeration() != null) {
-			Numeration numeration = getEntity(process.getNumeration().getId());
+		if(form != null && form.getNumeration() != null) {
+			Numeration numeration = getEntity(form.getNumeration().getId());
 			
 			if(numeration != null) {
 				restartIfNeeded(numeration);

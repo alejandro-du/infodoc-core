@@ -1,7 +1,7 @@
 package infodoc.core.ui.auth;
 
 import infodoc.core.InfodocConstants;
-import infodoc.core.ui.comun.InfodocTheme;
+import infodoc.core.ui.common.InfodocTheme;
 
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;

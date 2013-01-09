@@ -9,7 +9,7 @@ import infodoc.core.dto.HqlReport;
 import infodoc.core.dto.NotificationInstance;
 import infodoc.core.dto.HqlReportParameter;
 import infodoc.core.dto.Classification;
-import infodoc.core.dto.Process;
+import infodoc.core.dto.Form;
 import infodoc.core.dto.Activity;
 import infodoc.core.dto.User;
 import infodoc.core.dto.Validation;
@@ -61,8 +61,8 @@ public class InfodocFieldFactory extends DefaultCrudFieldFactory {
 		} else if(Classification.class.isAssignableFrom(bean.getClass())) {
 			field = new ClassificationFieldFactory().createCustomField(bean, item, pid, uiContext, propertyType);
 			
-		} else if(Process.class.isAssignableFrom(bean.getClass())) {
-			field = new ProcessFieldFactory().createCustomField(bean, item, pid, uiContext, propertyType);
+		} else if(Form.class.isAssignableFrom(bean.getClass())) {
+			field = new FormFieldFactory().createCustomField(bean, item, pid, uiContext, propertyType);
 			
 		} else if(Activity.class.isAssignableFrom(bean.getClass())) {
 			field = new ActivityFieldFactory().createCustomField(bean, item, pid, uiContext, propertyType);

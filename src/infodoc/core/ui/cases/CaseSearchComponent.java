@@ -1,13 +1,13 @@
-package infodoc.core.ui.processinstance;
+package infodoc.core.ui.cases;
 
 import infodoc.core.InfodocConstants;
 import infodoc.core.container.InfodocContainerFactory;
-import infodoc.core.dto.ProcessInstance;
-import infodoc.core.dto.Process;
+import infodoc.core.dto.Case;
+import infodoc.core.dto.Form;
 import infodoc.core.dto.Activity;
 import infodoc.core.dto.User;
-import infodoc.core.ui.comun.InfodocTheme;
-import infodoc.core.ui.processinstance.ProcessInstanceForm;
+import infodoc.core.ui.cases.CaseForm;
+import infodoc.core.ui.common.InfodocTheme;
 
 import java.util.Calendar;
 import java.util.Collection;
@@ -33,16 +33,16 @@ import com.vaadin.ui.VerticalLayout;
 
 import enterpriseapp.Utils;
 
-public class ProcessInstanceSearchComponent extends CustomComponent implements ClickListener {
+public class CaseSearchComponent extends CustomComponent implements ClickListener {
 
 	private static final long serialVersionUID = 1L;
 	
-	private Process process;
+	private Form dtoForm;
 	private final User user;
 	
-	private ProcessInstancesPagedList pagedInstancesComponent;
-	private ProcessInstanceForm form;
-	private TextField number = new TextField(InfodocConstants.uiProcessNumber);
+	private CasesPagedList pagedInstancesComponent;
+	private CaseForm form;
+	private TextField number = new TextField(InfodocConstants.uiFormNumber);
 	private DateField startingDate = new DateField(InfodocConstants.uiStarting);
 	private DateField endingDate = new DateField(InfodocConstants.uiEnding);
 	private Select activity = new Select(InfodocConstants.uiActivity);
@@ -52,13 +52,13 @@ public class ProcessInstanceSearchComponent extends CustomComponent implements C
 	private TextField endGroup = new TextField();
 	private TextField comments = new TextField(InfodocConstants.uiObservations);
 	private CheckBox lastActivityInstance = new CheckBox(InfodocConstants.uiLastActivityInstance);
-	private CheckBox pendingInstances = new CheckBox(InfodocConstants.uiPendingProcessInstances);
+	private CheckBox pendingInstances = new CheckBox(InfodocConstants.uiPendingCases);
 	private Button searchButton = new Button(InfodocConstants.uiSearch);
 	private Button clearButton = new Button(InfodocConstants.uiClearForm);
 	private Panel formPanel = new Panel(InfodocConstants.uiForm);
 	
-	public ProcessInstanceSearchComponent(Process process, User user) {
-		this.process = process;
+	public CaseSearchComponent(Form dtoForm, User user) {
+		this.dtoForm = dtoForm;
 		this.user = user;
 		
 		searchButton.addListener(this);
@@ -80,7 +80,7 @@ public class ProcessInstanceSearchComponent extends CustomComponent implements C
 		leftLayout.setMargin(true);
 		leftLayout.addComponent(formPanel);
 		
-		pagedInstancesComponent = new ProcessInstancesPagedList();
+		pagedInstancesComponent = new CasesPagedList();
 		
 		VerticalLayout rightLayout = new VerticalLayout();
 		rightLayout.setMargin(true);
@@ -96,8 +96,8 @@ public class ProcessInstanceSearchComponent extends CustomComponent implements C
 	}
 
 	private void createForm() {
-		ProcessInstance newInstance = new ProcessInstance();
-		newInstance.setProcess(process);
+		Case newInstance = new Case();
+		newInstance.setForm(dtoForm);
 		
 		Calendar calendar = Calendar.getInstance();
 		calendar.set(Calendar.MONTH, 0);
@@ -114,7 +114,7 @@ public class ProcessInstanceSearchComponent extends CustomComponent implements C
 		endingDate.setResolution(DateField.RESOLUTION_MIN);
 		endingDate.setDateFormat(Utils.getDateTimeFormatPattern());
 		
-		List<Activity> activities = InfodocContainerFactory.getActivityContainer().findByProcessId(process.getId());
+		List<Activity> activities = InfodocContainerFactory.getActivityContainer().findByFormId(dtoForm.getId());
 		
 		for(Activity a : activities) {
 			activity.addItem(a);
@@ -186,7 +186,7 @@ public class ProcessInstanceSearchComponent extends CustomComponent implements C
 		footer.addComponent(activityPanel);
 		footer.addComponent(buttonsLayout);
 		
-		form = new ProcessInstanceForm(newInstance, null, user, true, true, true);
+		form = new CaseForm(newInstance, null, user, true, true, true);
 		form.setImmediate(false);
 		form.setValidationVisible(false);
 		form.setWidth("100%");
@@ -201,8 +201,8 @@ public class ProcessInstanceSearchComponent extends CustomComponent implements C
 		if(searchButton.equals(event.getButton())) {
 			pagedInstancesComponent.removeAllComponents();
 			
-			Collection<Long> instancesIds = InfodocContainerFactory.getProcessInstanceContainer().search(
-				form.getProcessInstance().getProcess(),
+			Collection<Long> instancesIds = InfodocContainerFactory.getCaseContainer().search(
+				form.getCase().getForm(),
 				form.getPropertyValues(),
 				(String) number.getValue(),
 				(Activity) activity.getValue(),
@@ -222,7 +222,7 @@ public class ProcessInstanceSearchComponent extends CustomComponent implements C
 			
 		} else if(clearButton.equals(event.getButton())) {
 			number.setValue("");
-			number.setCaption(InfodocConstants.uiProcessNumber); // we need this to show caption after clearing
+			number.setCaption(InfodocConstants.uiFormNumber); // we need this to show caption after clearing
 			activity.setValue(null);
 			startingDate.setValue(null);
 			endingDate.setValue(null);

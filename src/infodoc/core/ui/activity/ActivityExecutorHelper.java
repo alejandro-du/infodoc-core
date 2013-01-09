@@ -1,11 +1,11 @@
 package infodoc.core.ui.activity;
 
 import infodoc.core.container.InfodocContainerFactory;
-import infodoc.core.dto.ProcessInstance;
-import infodoc.core.dto.Process;
+import infodoc.core.dto.Case;
+import infodoc.core.dto.Form;
 import infodoc.core.dto.Activity;
 import infodoc.core.dto.User;
-import infodoc.core.ui.comun.InfodocTheme;
+import infodoc.core.ui.common.InfodocTheme;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
@@ -29,20 +29,20 @@ public class ActivityExecutorHelper {
 	
 	public static final Logger logger = LoggerFactory.getLogger(ActivityExecutorHelper.class);
 	
-	public static void addExecuutorComponent(MDIWindow mdiWindow, Activity activity, Process process, User user) {
+	public static void addExecuutorComponent(MDIWindow mdiWindow, Activity activity, Form form, User user) {
 		try {
-			addExecutorComponent(mdiWindow, activity, process, user, null);
+			addExecutorComponent(mdiWindow, activity, form, user, null);
 		} catch(Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
 
-	public static void addExecutorComponent(MDIWindow mdiWindow, Activity activity, final Process process, User user, ProcessInstance uniqueProcessInstance) {
+	public static void addExecutorComponent(MDIWindow mdiWindow, Activity activity, final Form form, User user, Case uniqueCase) {
 		ActivityExecutor component = getActivityExecutorComponent(activity, user);
 		component.setSizeFull();
 		
-		if(uniqueProcessInstance != null) {
-			component.setUniqueProcessInstance(InfodocContainerFactory.getProcessInstanceContainer().getEntity(uniqueProcessInstance.getId()));
+		if(uniqueCase != null) {
+			component.setUniqueCase(InfodocContainerFactory.getCaseContainer().getEntity(uniqueCase.getId()));
 		}
 		
 		mdiWindow.closeAllWindows(ActivityExecutor.class, new CloseListener() {
@@ -50,14 +50,14 @@ public class ActivityExecutorHelper {
 			public boolean close(Component component) {
 				if(ActivityExecutor.class.isAssignableFrom(component.getClass())) {
 					ActivityExecutor ae = (ActivityExecutor) component;
-					return ae.getProcess().equals(process);
+					return ae.getForm().equals(form);
 				}
 				
 				return false;
 			}
 		});
 		
-		mdiWindow.addWorkbenchContent(component, activity.getName() + " (" + activity.getProcess().getName() + ")", null, true, false);
+		mdiWindow.addWorkbenchContent(component, activity.getName() + " (" + activity.getForm().getName() + ")", null, true, false);
 	}
 
 	public static ActivityExecutor getActivityExecutorComponent(Activity activity, User user) {
@@ -77,8 +77,8 @@ public class ActivityExecutorHelper {
 		return ActivityExecutorHelper.getActivityExecutorComponent(activity, user).getIcon();
 	}
 
-	public static Layout getAvailableActivitiesLayout(final ProcessInstance processInstance, final User user) {
-		List<Activity> activities = InfodocContainerFactory.getActivityContainer().findByProcessInstanceIdAndUserId(processInstance.getId(), user.getId());
+	public static Layout getAvailableActivitiesLayout(final Case caseDto, final User user) {
+		List<Activity> activities = InfodocContainerFactory.getActivityContainer().findByCaseIdAndUserId(caseDto.getId(), user.getId());
 		HorizontalLayout layout = new HorizontalLayout();
 		
 		for(final Activity activity : activities) {
@@ -91,7 +91,7 @@ public class ActivityExecutorHelper {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					ActivityExecutorHelper.addExecutorComponent((MDIWindow) EnterpriseApplication.getInstance().getMainWindow(), activity, processInstance.getProcess(), user, processInstance);
+					ActivityExecutorHelper.addExecutorComponent((MDIWindow) EnterpriseApplication.getInstance().getMainWindow(), activity, caseDto.getForm(), user, caseDto);
 				}
 			});
 			

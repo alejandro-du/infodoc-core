@@ -1,6 +1,6 @@
-package infodoc.core.ui.processinstance;
+package infodoc.core.ui.cases;
 
-import infodoc.core.dto.ProcessInstance;
+import infodoc.core.dto.Case;
 
 import com.vaadin.ui.AbstractLayout;
 import com.vaadin.ui.Component;
@@ -8,14 +8,14 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
-public class ProcessInstancesList extends CustomComponent {
+public class CasesList extends CustomComponent {
 
 	private static final long serialVersionUID = 1L;
 	
 	protected VerticalLayout layout;
 	protected VerticalLayout instancesLayout;
 	
-	public ProcessInstancesList() {
+	public CasesList() {
 		instancesLayout = new VerticalLayout();
 		
 		layout = new VerticalLayout();
@@ -24,15 +24,15 @@ public class ProcessInstancesList extends CustomComponent {
 		setCompositionRoot(layout);
 	}
 	
-	public void addAtBeginning(ProcessInstance instance) {
+	public void addAtBeginning(Case instance) {
 		addAtBeginning(instance, null);
 	}
 	
-	public void addAtBeginning(ProcessInstance instance, Component rightComponent) {
+	public void addAtBeginning(Case instance, Component rightComponent) {
 		addInstance(instance, rightComponent, true);
 	}
 	
-	public void addAtEnd(ProcessInstance instance, Component rightComponent) {
+	public void addAtEnd(Case instance, Component rightComponent) {
 		addInstance(instance, rightComponent, false);
 	}
 	
@@ -41,8 +41,8 @@ public class ProcessInstancesList extends CustomComponent {
 		instancesLayout.removeAllComponents();
 	}
 
-	protected void addInstance(ProcessInstance instance, Component rightComponent, boolean addAtBeginning) {
-		AbstractLayout instanceLayout = getProcessInstanceLayout(instance, rightComponent);
+	protected void addInstance(Case instance, Component rightComponent, boolean addAtBeginning) {
+		AbstractLayout instanceLayout = getCaseLayout(instance, rightComponent);
 		
 		if(addAtBeginning) {
 			instancesLayout.addComponentAsFirst(instanceLayout);
@@ -51,8 +51,8 @@ public class ProcessInstancesList extends CustomComponent {
 		}
 	}
 
-	protected AbstractLayout getProcessInstanceLayout(ProcessInstance instance, Component rightComponent) {
-		ProcessInstanceBox boxComponent = new ProcessInstanceBox(instance);
+	protected AbstractLayout getCaseLayout(Case instance, Component rightComponent) {
+		CaseBox boxComponent = new CaseBox(instance);
 		AbstractLayout instanceLayout;
 		
 		if(rightComponent == null) {

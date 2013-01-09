@@ -5,7 +5,7 @@ import infodoc.core.container.validator.PropertyJavaClassValidator;
 import infodoc.core.dto.Property;
 import infodoc.core.dto.User;
 import infodoc.core.field.FieldFactory;
-import infodoc.core.ui.comun.InfodocTheme;
+import infodoc.core.ui.common.InfodocTheme;
 
 import java.util.LinkedHashSet;
 

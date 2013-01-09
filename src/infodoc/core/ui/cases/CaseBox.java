@@ -1,13 +1,13 @@
-package infodoc.core.ui.processinstance;
+package infodoc.core.ui.cases;
 
 import infodoc.core.InfodocConstants;
 import infodoc.core.container.InfodocContainerFactory;
 import infodoc.core.dto.PropertyValue;
-import infodoc.core.dto.ProcessInstance;
+import infodoc.core.dto.Case;
 import infodoc.core.dto.ActivityInstance;
 import infodoc.core.dto.User;
 import infodoc.core.ui.activity.ActivityExecutorHelper;
-import infodoc.core.ui.comun.InfodocTheme;
+import infodoc.core.ui.common.InfodocTheme;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
@@ -33,18 +33,18 @@ import enterpriseapp.EnterpriseApplication;
 import enterpriseapp.Utils;
 import enterpriseapp.ui.DownloadField;
 
-public class ProcessInstanceBox extends CustomComponent {
+public class CaseBox extends CustomComponent {
 
 	private static final long serialVersionUID = 1L;
 	
-	private ProcessInstance processInstance;
+	private Case caseDto;
 	private FormLayout formLayout;
 	private Panel mainPanel;
 	private Panel activityInstancesPanel;
 	private Link printLink;
 	
-	public ProcessInstanceBox(ProcessInstance processInstance) {
-		this.processInstance = processInstance;
+	public CaseBox(Case caseDto) {
+		this.caseDto = caseDto;
 		initLayout();
 	}
 
@@ -56,9 +56,9 @@ public class ProcessInstanceBox extends CustomComponent {
 		activityInstancesPanel.setStyleName(InfodocTheme.PANEL_ACTIVITY_INSTANCES);
 		activityInstancesPanel.setWidth("100%");
 		
-		mainPanel = new Panel(processInstance.toString());
+		mainPanel = new Panel(caseDto.toString());
 		mainPanel.setStyleName(InfodocTheme.PANEL_BUBBLE);
-		mainPanel.setIcon(new ThemeResource(processInstance.getProcess().getIcon()));
+		mainPanel.setIcon(new ThemeResource(caseDto.getForm().getIcon()));
 		mainPanel.setWidth("100%");
 		mainPanel.addComponent(formLayout);
 		
@@ -69,26 +69,26 @@ public class ProcessInstanceBox extends CustomComponent {
 	public void attach() {
 		formLayout.removeAllComponents();
 		
-		if(processInstance.getPropertyValues() != null) {
-			for(PropertyValue value : processInstance.getPropertyValues()) {
+		if(caseDto.getPropertyValues() != null) {
+			for(PropertyValue value : caseDto.getPropertyValues()) {
 				addValue(value, formLayout);
 			}
 		}
 		
 		User user = (User) EnterpriseApplication.getInstance().getUser();
 		
-		formLayout.addComponent(ActivityExecutorHelper.getAvailableActivitiesLayout(processInstance, user));
+		formLayout.addComponent(ActivityExecutorHelper.getAvailableActivitiesLayout(caseDto, user));
 		
 		printLink = new Link(InfodocConstants.uiPrint, new StreamResource(new StreamResource.StreamSource() {
 			private static final long serialVersionUID = 1L;
 			public InputStream getStream() {
 				try {
-					return new ByteArrayInputStream(ProcessInstancePrintService.generateFile(processInstance));
+					return new ByteArrayInputStream(CasePrintService.generateFile(caseDto));
 				} catch (Exception e) {
 					throw new RuntimeException(e);
 				}
 			}
-		}, processInstance.toString().replace(" ", "") + ".pdf", getApplication()));
+		}, caseDto.toString().replace(" ", "") + ".pdf", getApplication()));
 		
 		printLink.setTargetName("_new");
 		
@@ -99,8 +99,8 @@ public class ProcessInstanceBox extends CustomComponent {
 		
 		mainPanel.addComponent(printLayout);
 		
-		if(processInstance.getActivityInstances() != null && !processInstance.getProcess().getHideActivityHistory()) {
-			for(ActivityInstance activityInstance : processInstance.getActivityInstances()) {
+		if(caseDto.getActivityInstances() != null && !caseDto.getForm().getHideActivityHistory()) {
+			for(ActivityInstance activityInstance : caseDto.getActivityInstances()) {
 				addActivityInstance(activityInstance);
 			}
 		}
@@ -109,7 +109,7 @@ public class ProcessInstanceBox extends CustomComponent {
 		activityHistoryLayout.setWidth("100%");
 		activityHistoryLayout.setMargin(true, false, false, false);
 		
-		if(!processInstance.getProcess().getHideActivityHistory()) {
+		if(!caseDto.getForm().getHideActivityHistory()) {
 			activityHistoryLayout.addComponent(activityInstancesPanel);
 		}
 		
@@ -136,13 +136,13 @@ public class ProcessInstanceBox extends CustomComponent {
 			
 			component = downloadField;
 			
-		} else if(value.getProcessInstancesValue() != null && !value.getProcessInstancesValue().isEmpty()) {
-			Set<ProcessInstance> instances = value.getProcessInstancesValue();
+		} else if(value.getCasesValue() != null && !value.getCasesValue().isEmpty()) {
+			Set<Case> instances = value.getCasesValue();
 			VerticalLayout verticalLayout = new VerticalLayout();
 			verticalLayout.setCaption(value.getProperty().getName());
 			
-			for(final ProcessInstance processInstance : instances) {
-				Button button = new Button(processInstance.toString());
+			for(final Case caseDto : instances) {
+				Button button = new Button(caseDto.toString());
 				button.setStyleName(InfodocTheme.BUTTON_LINK);
 				setStyle(value, button);
 				button.addListener(new Button.ClickListener() {
@@ -150,7 +150,7 @@ public class ProcessInstanceBox extends CustomComponent {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						showProcessInstance(processInstance);
+						showCase(caseDto);
 					}
 				});
 				
@@ -196,14 +196,14 @@ public class ProcessInstanceBox extends CustomComponent {
 		}
 	}
 	
-	private void showProcessInstance(ProcessInstance instance) {
-		instance = InfodocContainerFactory.getProcessInstanceContainer().getEntity(instance.getId());
+	private void showCase(Case instance) {
+		instance = InfodocContainerFactory.getCaseContainer().getEntity(instance.getId());
 		
-		Window window = new Window(instance.getProcess().getName());
+		Window window = new Window(instance.getForm().getName());
 		window.setWidth("680px");
 		window.setHeight("480px");
 		window.setModal(true);
-		window.addComponent(new ProcessInstanceBox(instance));
+		window.addComponent(new CaseBox(instance));
 		
 		getApplication().getMainWindow().addWindow(window);
 	}

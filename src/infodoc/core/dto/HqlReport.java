@@ -42,8 +42,8 @@ public class HqlReport extends Dto {
 	private boolean disabled;
 	
 	@ManyToOne
-	@JoinColumn(name="process_id")
-	private Process process;
+	@JoinColumn(name="form_id")
+	private Form form;
 	
     @ManyToMany
 	@JoinTable(
@@ -108,12 +108,12 @@ public class HqlReport extends Dto {
 		this.disabled = disabled;
 	}
 
-	public Process getProcess() {
-		return process;
+	public Form getForm() {
+		return form;
 	}
 	
-	public void setProcess(Process process) {
-		this.process = process;
+	public void setForm(Form form) {
+		this.form = form;
 	}
 	
 	public Set<UserGroup> getUserGroups() {

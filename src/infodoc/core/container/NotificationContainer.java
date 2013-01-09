@@ -10,7 +10,7 @@ public class NotificationContainer extends UserGroupFilteredContainer<Notificati
 	private static final long serialVersionUID = 1L;
 	
 	public NotificationContainer() {
-		super(Notification.class, "activity.process.userGroup.id");
+		super(Notification.class, "activity.form.userGroup.id");
 	}
 	
 	public List<Notification> findByActivityId(Long activityId) {

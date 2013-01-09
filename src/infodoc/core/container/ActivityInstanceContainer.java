@@ -1,6 +1,6 @@
 package infodoc.core.container;
 
-import infodoc.core.dto.ProcessInstance;
+import infodoc.core.dto.Case;
 import infodoc.core.dto.ActivityInstance;
 
 import java.io.Serializable;
@@ -74,15 +74,15 @@ public class ActivityInstanceContainer extends UserGroupFilteredContainer<Activi
 		);
 	}
 
-	public List<Date> findDatesHavingActivityInstances(Long processId, Date from, Date to) {
+	public List<Date> findDatesHavingActivityInstances(Long formId, Date from, Date to) {
 		return specialQuery(
 			"select distinct(ai.executionTime)" +
 			" from ActivityInstance ai where" +
-			" ai.activity.process.id = ?" +
+			" ai.activity.form.id = ?" +
 			" and date(ai.executionTime) >= date(?)" +
 			" and date(ai.executionTime) <= date(?)" +
 			" order by ai.executionTime",
-			new Object[] {processId, from, to}
+			new Object[] {formId, from, to}
 		);
 	}
 	
@@ -147,11 +147,11 @@ public class ActivityInstanceContainer extends UserGroupFilteredContainer<Activi
 	}
 
 	public ActivityInstance findPreviousInstance(ActivityInstance instance) {
-		ProcessInstance processInstance = InfodocContainerFactory.getProcessInstanceContainer().getEntity(instance.getProcessInstance().getId());
+		Case caseDto = InfodocContainerFactory.getCaseContainer().getEntity(instance.getCase().getId());
 		ActivityInstance previous = null;
 		
-		if(processInstance.getActivityInstances() != null) {
-			for(ActivityInstance i : processInstance.getActivityInstances()) {
+		if(caseDto.getActivityInstances() != null) {
+			for(ActivityInstance i : caseDto.getActivityInstances()) {
 				if(!i.equals(instance)) {
 					previous = i;
 				} else {

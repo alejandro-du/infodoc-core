@@ -1,4 +1,4 @@
-package infodoc.core.ui.comun;
+package infodoc.core.ui.common;
 
 import java.io.File;
 import java.util.Collection;
@@ -48,9 +48,9 @@ public class InfodocTheme extends ChameleonTheme {
 	public static final String iconsDirectory = "icons";
 	
 	public static final String iconActivityCreate = "icons/activity-create.png";
-	public static final String iconActivityProcess = "icons/activity-process.png";
-	public static final String iconActivityProcessAssignedWithOtherUser = "icons/activity-process-assigned-with-other-user.png";
-	public static final String iconActivityProcessAssgigned = "icons/activity-process-assigned.png";
+	public static final String iconActivityForm = "icons/activity-form.png";
+	public static final String iconActivityFormAssignedWithOtherUser = "icons/activity-form-assigned-with-other-user.png";
+	public static final String iconActivityFormAssgigned = "icons/activity-form-assigned.png";
 	public static final String iconActivityAssignUser = "icons/activity-assign-user.png";
 	public static final String iconActivityAssignUserGroup = "icons/activity-assign-user-group.png";
 	
@@ -61,7 +61,7 @@ public class InfodocTheme extends ChameleonTheme {
 	public static final String iconAdmin = "icons/admin.png";
 	public static final String iconUser = "icons/user.png";
 	public static final String iconUserGroup = "icons/user-group.png";
-	public static final String iconProcessInstances = "icons/process-instances.png";
+	public static final String iconCases = "icons/cases.png";
 	public static final String iconPropertyValue = "icons/property-value.png";
 	public static final String iconActivityInstance = "icons/activity-instance.png";
 	public static final String iconNotificationInstance = "icons/notification-instance.png";
@@ -75,7 +75,7 @@ public class InfodocTheme extends ChameleonTheme {
 	public static final String iconAbout = "icons/about.png";
 	public static final String iconUserManual = "icons/book.png";
 	public static final String iconConfiguration = "icons/configuration.png";
-	public static final String iconProcess = "icons/process.png";
+	public static final String iconForm = "icons/form.png";
 	public static final String iconNumeration = "icons/numeration.png";
 	public static final String iconProperty = "icons/property.png";
 	public static final String iconValidationInstance = "icons/validation.png";

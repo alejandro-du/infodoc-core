@@ -100,15 +100,15 @@ public class Property extends Dto implements Serializable, Comparator<Property> 
     
     @ManyToMany
 	@JoinTable(
-		name="process_has_property"
+		name="form_has_property"
 		, joinColumns={
 			@JoinColumn(name="property_id")
 		}
 		, inverseJoinColumns={
-			@JoinColumn(name="process_id")
+			@JoinColumn(name="form_id")
 		}
 	)
-	private Set<Process> processes;
+	private Set<Form> forms;
     
     @ManyToMany
 	@JoinTable(
@@ -125,7 +125,7 @@ public class Property extends Dto implements Serializable, Comparator<Property> 
 	@Override
 	public int compare(Property property1, Property property2) {
 		if(property1.getPosition() == null) {
-			return Integer.MAX_VALUE;
+			return (int) (property1.getId() - property2.getId());
 		}
 		
 		if(property2.getPosition() == null) {
@@ -282,12 +282,12 @@ public class Property extends Dto implements Serializable, Comparator<Property> 
 		this.userGroups = userGroups;
 	}
 
-	public Set<Process> getProcesses() {
-		return processes;
+	public Set<Form> getForms() {
+		return forms;
 	}
 
-	public void setProcesses(Set<Process> processes) {
-		this.processes = processes;
+	public void setForms(Set<Form> forms) {
+		this.forms = forms;
 	}
 
 	public Set<Activity> getActivities() {

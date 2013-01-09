@@ -20,29 +20,29 @@ public class PropertyContainer extends UserGroupFilteredContainer<Property> {
 		}
 	}
 	
-	public List<Property> findByUserIdAndProcessIdAndActivityId(Long userId, Long processId, Long activityId) {
+	public List<Property> findByUserIdAndFormIdAndActivityId(Long userId, Long formId, Long activityId) {
 		return query(
 			"select distinct p" +
 			" from Property p" +
 			" join p.userGroups g" +
 			" join g.users u" +
-			" join p.processes proc" +
+			" join p.forms proc" +
 			" join p.activities a where u.id = ?" +
 			" and proc.id = ? and a.id = ?" +
 			" and p.disabled is false" +
 			" order by p.position",
-			new Object[] {userId, processId, activityId});
+			new Object[] {userId, formId, activityId});
 	}
 
-	public List<Property> findByProcessId(Long processId) {
+	public List<Property> findByFormId(Long formId) {
 		return query(
 			"select distinct p" +
 			" from Property p" +
-			" join p.processes proc" +
+			" join p.forms proc" +
 			" where proc.id = ?" +
 			" and p.disabled is false" +
 			" order by p.position",
-			new Object[] {processId});
+			new Object[] {formId});
 	}
 
 }

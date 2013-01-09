@@ -2,13 +2,12 @@ package infodoc.core.ui.activity;
 
 import infodoc.core.InfodocConstants;
 import infodoc.core.container.InfodocContainerFactory;
-import infodoc.core.dto.ProcessInstance;
 import infodoc.core.dto.Activity;
+import infodoc.core.dto.Case;
 import infodoc.core.dto.User;
-import infodoc.core.ui.activity.ActivityExecutor;
-import infodoc.core.ui.comun.InfodocTheme;
-import infodoc.core.ui.processinstance.ProcessInstanceForm;
-import infodoc.core.ui.processinstance.ProcessInstancesList;
+import infodoc.core.ui.cases.CaseForm;
+import infodoc.core.ui.cases.CasesList;
+import infodoc.core.ui.common.InfodocTheme;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +32,11 @@ public abstract class ActivityListExecutorTemplate extends ActivityExecutor impl
 	
 	private static final long serialVersionUID = 1L;
 	
-	protected ProcessInstancesList processInstanceList;
+	protected CasesList caseDtoList;
 	protected Button updateButton = new Button();
 	protected Button executeForAllButton = new Button();
-	protected List<ProcessInstance> processInstances;
-	protected List<ProcessInstanceForm> forms;
+	protected List<Case> caseDtos;
+	protected List<CaseForm> forms;
 	
 	public ActivityListExecutorTemplate() {
 		super();
@@ -47,7 +46,7 @@ public abstract class ActivityListExecutorTemplate extends ActivityExecutor impl
 		super(activity, user);
 	}
 	
-	public abstract void execute(ProcessInstanceForm form);
+	public abstract void execute(CaseForm form);
 	
 	@Override
 	public void initLayout() {
@@ -66,63 +65,63 @@ public abstract class ActivityListExecutorTemplate extends ActivityExecutor impl
 		buttonsLayout.addComponent(updateButton);
 		buttonsLayout.addComponent(executeForAllButton);
 		
-		processInstanceList = new ProcessInstancesList();
-		addProcessInstances();
+		caseDtoList = new CasesList();
+		addCases();
 		
-		Panel processInstancesPanel = new Panel();
-		processInstancesPanel.addStyleName(InfodocTheme.PANEL_LIGHT);
-		processInstancesPanel.setSizeFull();
-		processInstancesPanel.addComponent(processInstanceList);
+		Panel caseDtosPanel = new Panel();
+		caseDtosPanel.addStyleName(InfodocTheme.PANEL_LIGHT);
+		caseDtosPanel.setSizeFull();
+		caseDtosPanel.addComponent(caseDtoList);
 		
 		VerticalLayout layout = new VerticalLayout();
 		layout.setSizeFull();
 		layout.addComponent(buttonsLayout);
-		layout.addComponent(processInstancesPanel);
-		layout.setExpandRatio(processInstancesPanel, 1);
+		layout.addComponent(caseDtosPanel);
+		layout.setExpandRatio(caseDtosPanel, 1);
 		
 		setCompositionRoot(layout);
 	}
 	
-	public void addProcessInstances() {
-		processInstanceList.removeAllComponents();
-		processInstances = getProcessInstances();
+	public void addCases() {
+		caseDtoList.removeAllComponents();
+		caseDtos = getCases();
 		
-		forms = new ArrayList<ProcessInstanceForm>();
+		forms = new ArrayList<CaseForm>();
 		
-		for(ProcessInstance processInstance : processInstances) {
-			ProcessInstanceForm form = createForm(processInstance);
+		for(Case caseDto : caseDtos) {
+			CaseForm form = createForm(caseDto);
 			forms.add(form);
 			
 			Panel rightPanel = new Panel(InfodocConstants.uiForm);
 			rightPanel.addComponent(form);
 			
-			processInstanceList.addAtBeginning(processInstance, rightPanel);
+			caseDtoList.addAtBeginning(caseDto, rightPanel);
 		}
 	}
 
 	@Override
-	public Long countAvailableProcessInstances() {
-		return (long) getProcessInstances().size();
+	public Long countAvailableCases() {
+		return (long) getCases().size();
 	}
 	
-	public List<ProcessInstance> getProcessInstances() {
-		List<ProcessInstance> availableInstances = InfodocContainerFactory.getProcessInstanceContainer().findAvailableByUserIdAndNextActivityId(getUser().getId(), getActivity().getId());
+	public List<Case> getCases() {
+		List<Case> availableInstances = InfodocContainerFactory.getCaseContainer().findAvailableByUserIdAndNextActivityId(getUser().getId(), getActivity().getId());
 		
-		if(getUniqueProcessInstance() != null) {
-			processInstances = new ArrayList<ProcessInstance>();
+		if(getUniqueCase() != null) {
+			caseDtos = new ArrayList<Case>();
 			
-			if(availableInstances.contains(getUniqueProcessInstance())) {
-				processInstances.add(getUniqueProcessInstance());
+			if(availableInstances.contains(getUniqueCase())) {
+				caseDtos.add(getUniqueCase());
 			}
 			
 		} else {
-			processInstances = availableInstances;
+			caseDtos = availableInstances;
 		}
 
-		return processInstances;
+		return caseDtos;
 	}
 
-	public ProcessInstanceForm createForm(ProcessInstance processInstance) {
+	public CaseForm createForm(Case caseDto) {
 		Label leftSpacer = new Label();
 		leftSpacer.setWidth("100%");
 		
@@ -137,7 +136,7 @@ public abstract class ActivityListExecutorTemplate extends ActivityExecutor impl
 		footer.addComponent(executeButton);
 		footer.setComponentAlignment(executeButton, Alignment.BOTTOM_RIGHT);
 		
-		ProcessInstanceForm form = new ProcessInstanceForm(processInstance, getActivity(), getUser());
+		CaseForm form = new CaseForm(caseDto, getActivity(), getUser());
 		form.setFooter(footer);
 		
 		executeButton.setData(form);
@@ -155,7 +154,7 @@ public abstract class ActivityListExecutorTemplate extends ActivityExecutor impl
 			
 		} else {
 			if(event.getButton().getData() != null) {
-				ProcessInstanceForm form = (ProcessInstanceForm) event.getButton().getData();
+				CaseForm form = (CaseForm) event.getButton().getData();
 				
 				executeForOneInstance(form);
 			}
@@ -163,8 +162,8 @@ public abstract class ActivityListExecutorTemplate extends ActivityExecutor impl
 	}
 	
 	public void update() {
-		addProcessInstances();
-		getWindow().showNotification("" + processInstances.size() + " " + InfodocConstants.uiMatchesFound);
+		addCases();
+		getWindow().showNotification("" + caseDtos.size() + " " + InfodocConstants.uiMatchesFound);
 	}
 	
 	public void confirmExecuteForAll() {
@@ -180,18 +179,18 @@ public abstract class ActivityListExecutorTemplate extends ActivityExecutor impl
 	}
 	
 	public void executeForAllInstances() {
-		for(ProcessInstanceForm form : forms) {
+		for(CaseForm form : forms) {
 			executeForInstace(form);
 		}
 	}
 
-	public void executeForOneInstance(ProcessInstanceForm form) {
+	public void executeForOneInstance(CaseForm form) {
 		executeForInstace(form);
 	}
 
-	public void executeForInstace(ProcessInstanceForm form) {
+	public void executeForInstace(CaseForm form) {
 		try {
-			validateProcessInstanceIsAvailable(form.getProcessInstance());
+			validateCaseIsAvailable(form.getCase());
 			execute(form);
 			
 		} catch (InvalidValueException e) {
@@ -199,11 +198,11 @@ public abstract class ActivityListExecutorTemplate extends ActivityExecutor impl
 		}
 	}
 	
-	public void validateProcessInstanceIsAvailable(ProcessInstance processInstance) {
-		List<ProcessInstance> availableInstances = getProcessInstances();
+	public void validateCaseIsAvailable(Case caseDto) {
+		List<Case> availableInstances = getCases();
 		
-		if(!availableInstances.contains(processInstance)) {
-			throw new InvalidValueException(InfodocConstants.uiErrorProcessInstanceNotAvailable);
+		if(!availableInstances.contains(caseDto)) {
+			throw new InvalidValueException(InfodocConstants.uiErrorCaseNotAvailable);
 		}
 	}
 

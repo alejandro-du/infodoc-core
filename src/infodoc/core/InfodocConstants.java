@@ -14,7 +14,7 @@ public abstract class InfodocConstants extends Constants {
 	public static final String infodocCompanyAddress= Utils.getProperty("infodoc.companyAddress");
 	public static final String infodocDefaultPrintTemplate = Utils.getProperty("infodoc.defaultPrintTemplate");
 	public static final String infodocDefaultNotificationTemplate = Utils.getProperty("infodoc.defaultNotificationTemplate");
-	public static final Integer infodocProcessInstancesPerPage = Integer.parseInt(Utils.getProperty("infodoc.processInstancesPerPage"));
+	public static final Integer infodocCasesPerPage = Integer.parseInt(Utils.getProperty("infodoc.casesPerPage"));
 	public static final String infodocDisabledFieldsForChildGroups = Utils.getProperty("infodoc.disabledFieldsForChildGroups");
 	
 	public static final String uiUserLogin = Utils.getProperty("ui.user.login");
@@ -46,7 +46,7 @@ public abstract class InfodocConstants extends Constants {
 	public static final String uiFirstActivityInstance = Utils.getProperty("ui.firstActivityInstance");
 	public static final String uiLastActivityInstance = Utils.getProperty("ui.lastActivityInstance");
 	public static final String uiLastActivityInstances = Utils.getProperty("ui.lastActivityInstances");
-	public static final String uiPendingProcessInstances = Utils.getProperty("ui.pendingProcessInstances");
+	public static final String uiPendingCases = Utils.getProperty("ui.pendingCases");
 	public static final String uiDateResolution = Utils.getProperty("ui.dateResolution");
 	public static final String uiYear = Utils.getProperty("ui.year");
 	public static final String uiMonth = Utils.getProperty("ui.month");
@@ -81,22 +81,22 @@ public abstract class InfodocConstants extends Constants {
 	public static final String uiNotifications = Utils.getProperty("ui.notifications");
 	public static final String uiNotificationInstances = Utils.getProperty("ui.notificationInstances");
 	public static final String uiNumerations = Utils.getProperty("ui.numerations");
-	public static final String uiProcesses = Utils.getProperty("ui.processes");
-	public static final String uiProcessInstances = Utils.getProperty("ui.processInstances");
+	public static final String uiForms = Utils.getProperty("ui.forms");
+	public static final String uiCases = Utils.getProperty("ui.cases");
 	public static final String uiProperties = Utils.getProperty("ui.properties");
 	public static final String uiPropertyValues = Utils.getProperty("ui.propertyValues");
 	public static final String uiUsers = Utils.getProperty("ui.users");
 	public static final String uiUserGroups = Utils.getProperty("ui.userGroups");
 	public static final String uiValidations = Utils.getProperty("ui.validations");
 	
-	public static final String uiProcessNumber = Utils.getProperty("ui.processInstance.number");
+	public static final String uiFormNumber = Utils.getProperty("ui.case.number");
 	
 	public static final String uiUserDashboardUrl = Utils.getProperty("ui.user.dashboardUrl");
 	public static final String uiUserTimeZone = Utils.getProperty("ui.user.timeZone");
 	
 	public static final String uiUserPasswordError = Utils.getProperty("ui.user.password.error");
 	public static final String uiErrorPropertiesModified = Utils.getProperty("ui.errorModifiedProperties");
-	public static final String uiErrorProcessInstanceNotAvailable = Utils.getProperty("ui.errorProcessInstanceNotAvailable");
+	public static final String uiErrorCaseNotAvailable = Utils.getProperty("ui.errorCaseNotAvailable");
 	public static final String uiErrorJavaClassInvalidOrNotFound = Utils.getProperty("ui.errorJavaClassInvalidOrNotFound");
 	public static final String uiErrorIncorrectParam(String property) { return Utils.getProperty("ui.errorIncorrectParam", new String[] {property}); };
 	public static final String uiInvalidDateValue = Utils.getProperty("ui.invalidDateValue");

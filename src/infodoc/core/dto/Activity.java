@@ -19,7 +19,7 @@ import enterpriseapp.hibernate.annotation.CrudTable;
 import enterpriseapp.hibernate.dto.Dto;
 
 @Entity
-@Table(name="activity", uniqueConstraints={@UniqueConstraint(columnNames={"name", "process_id"})})
+@Table(name="activity", uniqueConstraints={@UniqueConstraint(columnNames={"name", "form_id"})})
 @CrudTable(filteringPropertyName="name")
 public class Activity extends Dto implements Serializable {
 	
@@ -46,8 +46,8 @@ public class Activity extends Dto implements Serializable {
 	private boolean disabled;
 	
 	@ManyToOne
-	@JoinColumn(name="process_id", nullable=false)
-	private Process process;
+	@JoinColumn(name="form_id", nullable=false)
+	private Form form;
 	
     @ManyToMany
 	@JoinTable(
@@ -87,7 +87,7 @@ public class Activity extends Dto implements Serializable {
     
 	@Override
 	public String toString() {
-		return process.getName() + "-" + name;
+		return form.getName() + "-" + name;
 	}
 
 	public Long getId() {
@@ -138,12 +138,12 @@ public class Activity extends Dto implements Serializable {
 		this.disabled = disabled;
 	}
 
-	public Process getProcess() {
-		return process;
+	public Form getForm() {
+		return form;
 	}
 
-	public void setProcess(Process process) {
-		this.process = process;
+	public void setForm(Form form) {
+		this.form = form;
 	}
 
     public Set<Activity> getNextActivities() {

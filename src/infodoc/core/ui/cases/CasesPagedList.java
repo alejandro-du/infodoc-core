@@ -1,9 +1,9 @@
-package infodoc.core.ui.processinstance;
+package infodoc.core.ui.cases;
 
 import infodoc.core.InfodocConstants;
-import infodoc.core.container.ProcessInstanceContainer;
+import infodoc.core.container.CaseContainer;
 import infodoc.core.container.InfodocContainerFactory;
-import infodoc.core.dto.ProcessInstance;
+import infodoc.core.dto.Case;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -12,23 +12,23 @@ import org.vaadin.pagingcomponent.PagingComponent;
 import org.vaadin.pagingcomponent.PagingComponent.ChangePageEvent;
 import org.vaadin.pagingcomponent.PagingComponent.PagingComponentListener;
 
-public class ProcessInstancesPagedList extends ProcessInstancesList implements PagingComponentListener<Long> {
+public class CasesPagedList extends CasesList implements PagingComponentListener<Long> {
 
 	private static final long serialVersionUID = 1L;
 	
-	ArrayList<Long> processInstancesIds = new ArrayList<Long>();
+	ArrayList<Long> caseDtosIds = new ArrayList<Long>();
 	
 	private PagingComponent<Long> pagingComponent;
 	
-	public void addProcesInstances(Collection<Long> processInstancesIds) {
-		this.processInstancesIds.addAll(processInstancesIds);
+	public void addProcesInstances(Collection<Long> caseDtosIds) {
+		this.caseDtosIds.addAll(caseDtosIds);
 		
 		if(pagingComponent != null) {
 			layout.removeComponent(pagingComponent);
 		}
 		
-		if(!processInstancesIds.isEmpty()) {
-			pagingComponent = new PagingComponent<Long>(InfodocConstants.infodocProcessInstancesPerPage, processInstancesIds, this);
+		if(!caseDtosIds.isEmpty()) {
+			pagingComponent = new PagingComponent<Long>(InfodocConstants.infodocCasesPerPage, caseDtosIds, this);
 			layout.addComponent(pagingComponent);
 		}
 	}
@@ -36,17 +36,17 @@ public class ProcessInstancesPagedList extends ProcessInstancesList implements P
 	@Override
     public void removeAllComponents() {
 		super.removeAllComponents();
-		processInstancesIds.clear();
+		caseDtosIds.clear();
 	}
 	
 	@Override
 	public void displayPage(ChangePageEvent<Long> event) {
-		ProcessInstanceContainer processInstanceContainer = InfodocContainerFactory.getProcessInstanceContainer();
+		CaseContainer caseDtoContainer = InfodocContainerFactory.getCaseContainer();
 		super.removeAllComponents();
 		
 		for(int i = event.getPageRange().getIndexPageStart(); i < event.getPageRange().getIndexPageEnd(); i++) {
-			ProcessInstance processInstance = processInstanceContainer.getEntity(processInstancesIds.get(i));
-			addAtEnd(processInstance, null);
+			Case caseDto = caseDtoContainer.getEntity(caseDtosIds.get(i));
+			addAtEnd(caseDto, null);
 		}
 	}
 	

@@ -5,14 +5,14 @@ import infodoc.core.dto.ClassificationValue;
 import infodoc.core.dto.Notification;
 import infodoc.core.dto.Numeration;
 import infodoc.core.dto.PropertyValue;
-import infodoc.core.dto.ProcessInstance;
+import infodoc.core.dto.Case;
 import infodoc.core.dto.UserGroup;
 import infodoc.core.dto.JavaReport;
 import infodoc.core.dto.HqlReport;
 import infodoc.core.dto.NotificationInstance;
 import infodoc.core.dto.HqlReportParameter;
 import infodoc.core.dto.Classification;
-import infodoc.core.dto.Process;
+import infodoc.core.dto.Form;
 import infodoc.core.dto.Activity;
 import infodoc.core.dto.ActivityInstance;
 import infodoc.core.dto.User;
@@ -38,8 +38,8 @@ public class InfodocContainerFactory extends ContainerFactory {
 		} else if(clazz.equals(PropertyValue.class)) {
 			return getPropertyValueContainer();
 			
-		} else if(clazz.equals(ProcessInstance.class)) {
-			return getProcessInstanceContainer();
+		} else if(clazz.equals(Case.class)) {
+			return getCaseContainer();
 			
 		} else if(clazz.equals(NotificationInstance.class)) {
 			return getNotificationInstanceContainer();
@@ -56,8 +56,8 @@ public class InfodocContainerFactory extends ContainerFactory {
 		} else if(clazz.equals(Classification.class)) {
 			return getClassificationContainer();
 			
-		} else if(clazz.equals(Process.class)) {
-			return getProcessContainer();
+		} else if(clazz.equals(Form.class)) {
+			return getFormContainer();
 			
 		} else if(clazz.equals(Activity.class)) {
 			return getActivityContainer();
@@ -100,8 +100,8 @@ public class InfodocContainerFactory extends ContainerFactory {
 		return new PropertyValueContainer();
 	}
 
-	public static ProcessInstanceContainer getProcessInstanceContainer() {
-		return new ProcessInstanceContainer();
+	public static CaseContainer getCaseContainer() {
+		return new CaseContainer();
 	}
 
 	public static NotificationInstanceContainer getNotificationInstanceContainer() {
@@ -124,8 +124,8 @@ public class InfodocContainerFactory extends ContainerFactory {
 		return new ClassificationContainer();
 	}
 
-	public static ProcessContainer getProcessContainer() {
-		return new ProcessContainer();
+	public static FormContainer getFormContainer() {
+		return new FormContainer();
 	}
 
 	public static ActivityContainer getActivityContainer() {

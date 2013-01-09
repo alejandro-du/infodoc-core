@@ -3,8 +3,8 @@ package infodoc.core.container;
 import infodoc.core.dto.Property;
 import infodoc.core.dto.ClassificationValue;
 import infodoc.core.dto.PropertyValue;
-import infodoc.core.dto.ProcessInstance;
-import infodoc.core.dto.Process;
+import infodoc.core.dto.Case;
+import infodoc.core.dto.Form;
 import infodoc.core.dto.Activity;
 import infodoc.core.dto.ActivityInstance;
 
@@ -17,23 +17,23 @@ import java.util.List;
 import org.hibernate.Query;
 
 @SuppressWarnings("unchecked")
-public class ProcessInstanceContainer extends UserGroupFilteredContainer<ProcessInstance> {
+public class CaseContainer extends UserGroupFilteredContainer<Case> {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public ProcessInstanceContainer() {
-		super(ProcessInstance.class, "process.userGroup.id");
+	public CaseContainer() {
+		super(Case.class, "form.userGroup.id");
 	}
 
 	@Override
-	public synchronized Serializable saveEntity(ProcessInstance processInstance) {
+	public synchronized Serializable saveEntity(Case caseDto) {
 		try {
 			sessionManager.getSession().beginTransaction();
 			
-			Long nextValue = InfodocContainerFactory.getNumerationContainer().getNextValue(processInstance.getProcess().getId());
-			processInstance.setNumber(nextValue);
+			Long nextValue = InfodocContainerFactory.getNumerationContainer().getNextValue(caseDto.getForm().getId());
+			caseDto.setNumber(nextValue);
 			
-			Serializable serializable = super.saveEntity(processInstance);
+			Serializable serializable = super.saveEntity(caseDto);
 			
 			return serializable;
 			
@@ -43,42 +43,42 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 		}
 	}
 	
-	public ProcessInstance getCurrentByNumber(Long number) {
+	public Case getCurrentByNumber(Long number) {
 		return singleQuery(
 			"select pi" +
-			" from ProcessInstance pi" +
+			" from Case pi" +
 			" where pi.number = ?" +
 			" order by pi.id desc" +
 			" limit 1", new Object[] {number});
 	}
 	
-	public List<ProcessInstance> findMyProcessInstances(Long userId, Long processId) {
+	public List<Case> findMyCases(Long userId, Long formId) {
 		return query(
 			"select distinct pi" +
-			" from ProcessInstance pi" +
+			" from Case pi" +
 			" join pi.activityInstances ai" +
 			" join ai.activity.nextActivities nextAct" +
 			" left join ai.assignedUsers assignedU1" +
 			" left join ai.assignedUserGroups assignedUG" +
 			" left join assignedUG.users assignedU2" +
-			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.processInstance.id = pi.id)" +
+			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = pi.id)" +
 			" and (assignedU1.id = ? or assignedU2.id = ?)" +
-			" and (? = null or pi.process.id = ?)" +
+			" and (? = null or pi.form.id = ?)" +
 			" order by ai.executionTime desc",
-			new Object [] {userId, userId, processId, processId}
+			new Object [] {userId, userId, formId, formId}
 		);
 	}
 
-	public List<ProcessInstance> findAvailableByUserIdAndNextActivityId(Long userId, Long activityId) {
+	public List<Case> findAvailableByUserIdAndNextActivityId(Long userId, Long activityId) {
 		return query(
 			"select distinct pi" +
-			" from ProcessInstance pi" +
+			" from Case pi" +
 			" join pi.activityInstances ai" +
 			" join ai.activity.nextActivities nextAct" +
 			" left join ai.assignedUsers assignedU1" +
 			" left join ai.assignedUserGroups assignedUG" +
 			" left join assignedUG.users assignedU2" +
-			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.processInstance.id = pi.id)" +
+			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = pi.id)" +
 			" and (assignedU1.id = ? or assignedU2.id = ?)" +
 			" and nextAct.id = ?" +
 			" order by ai.executionTime desc",
@@ -86,13 +86,13 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 		);
 	}
 
-	public List<ProcessInstance> findAssignedToOtherUserByUserIdAndNextActivityId(Long userId, Long activityId) {
+	public List<Case> findAssignedToOtherUserByUserIdAndNextActivityId(Long userId, Long activityId) {
 		return query(
 			"select distinct pi" +
-			" from ProcessInstance pi" +
+			" from Case pi" +
 			" join pi.activityInstances ai" +
 			" join ai.activity.nextActivities nextAct" +
-			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai.processInstance.id = pi.id)" +
+			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai.caseDto.id = pi.id)" +
 			" and ai.user.id = ?" +
 			" and nextAct.id = ?" +
 			" and ai.user.id not in (select u.id from ActivityInstance ai2 join ai2.assignedUsers u where ai2.id = ai.id)",
@@ -100,76 +100,76 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 		);
 	}
 	
-	public List<ProcessInstance> findAssignedByUserIdAndCurrentActivityId(Long userId, Long activityId) {
+	public List<Case> findAssignedByUserIdAndCurrentActivityId(Long userId, Long activityId) {
 		return query(
 			"select distinct pi" +
-			" from ProcessInstance pi" +
+			" from Case pi" +
 			" join pi.activityInstances ai" +
-			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.processInstance.id = pi.id)" +
+			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = pi.id)" +
 			" and ai.user.id = ?" +
 			" and ai.activity.id = ?",
 			new Object [] {userId, activityId}
 		);
 	}
 	
-	public List<ProcessInstance> findByActivityId(Long activityId) {
+	public List<Case> findByActivityId(Long activityId) {
 		return query(
 				"select distinct pi" +
-				" from ProcessInstance pi" +
+				" from Case pi" +
 				" join pi.activityInstances ai" +
-				" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.processInstance.id = pi.id)" +
+				" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = pi.id)" +
 				" and ai.activity.id = ?" +
 				" and pi." + getHqlConditionToFilterByUserGroup(),
 				new Object [] {activityId}
 			);
 	}
 	
-	public List<ProcessInstance> findPendingByProcessId(Long processId, Date from, Date to) {
+	public List<Case> findPendingByFormId(Long formId, Date from, Date to) {
 		return query(
 			"select distinct pi" +
-			" from ProcessInstance pi" +
+			" from Case pi" +
 			" join pi.activityInstance lastAi" +
 			" join pi.activityInstance firstAi" +
-			" where firstAi.id = (select min(ai.id) from ActivityInstance ai where ai.processInstance.id = pi.id)" +
-			" and lastAi.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.processInstance.id = pi.id)" +
-			" and pi.process.id = ?" +
+			" where firstAi.id = (select min(ai.id) from ActivityInstance ai where ai.caseDto.id = pi.id)" +
+			" and lastAi.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = pi.id)" +
+			" and pi.form.id = ?" +
 			" and date(firstAi.executionTime) >= date(?)" +
 			" and date(lastAi.executionTime) <= date(?)",
-			new Object [] {processId, from, to}
+			new Object [] {formId, from, to}
 		);
 	}
 	
-	public List<ProcessInstance> findFinishedByProcessId(Long processId, Date from, Date to) {
+	public List<Case> findFinishedByFormId(Long formId, Date from, Date to) {
 		return query(
 			"select distinct pi" +
-			" from ProcessInstance pi" +
+			" from Case pi" +
 			" join pi.activityInstances lastAi" +
 			" join pi.activityInstances firstAi" +
 			" left join lastAi.activity.nextActivities nextAct" +
-			" where firstAi.id = (select min(ai.id) from ActivityInstance ai where ai.processInstance.id = pi.id)" +
-			" and lastAi.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.processInstance.id = pi.id)" +
-			" and pi.process.id = ?" +
+			" where firstAi.id = (select min(ai.id) from ActivityInstance ai where ai.caseDto.id = pi.id)" +
+			" and lastAi.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = pi.id)" +
+			" and pi.form.id = ?" +
 			" and nextAct is null" +
 			" and date(firstAi.executionTime) >= date(?)" +
 			" and date(lastAi.executionTime) <= date(?)",
-			new Object [] {processId, from, to}
+			new Object [] {formId, from, to}
 		);
 	}
 
-	public List<ProcessInstance> findByNumberAndProcessId(Long number, Long processId) {
+	public List<Case> findByNumberAndFormId(Long number, Long formId) {
 		return query(
 			"select distinct pi" +
-			" from ProcessInstance pi" +
-			" where pi.process.id = ?" +
+			" from Case pi" +
+			" where pi.form.id = ?" +
 			" and pi.number = ?" +
 			" and pi." + getHqlConditionToFilterByUserGroup(),
-			new Object[] {number, processId});
+			new Object[] {number, formId});
 	}
 	
 	// TODO: validate consistency
-	public ProcessInstance updateInstance(ProcessInstance instance, List<PropertyValue> propertyValues, ActivityInstance activityInstance) {
+	public Case updateInstance(Case instance, List<PropertyValue> propertyValues, ActivityInstance activityInstance) {
 		try {
-			InfodocContainerFactory.getProcessInstanceContainer().saveOrUpdateEntity(instance);
+			InfodocContainerFactory.getCaseContainer().saveOrUpdateEntity(instance);
 			return saveActivityInstance(instance, propertyValues, activityInstance);
 			
 		} catch (Exception e) {
@@ -179,9 +179,9 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 	}
 
 	// TODO: validate consistency
-	public ProcessInstance saveInstace(ProcessInstance instance, List<PropertyValue> propertyValues, ActivityInstance activityInstace) {
+	public Case saveInstace(Case instance, List<PropertyValue> propertyValues, ActivityInstance activityInstace) {
 		try {
-			InfodocContainerFactory.getProcessInstanceContainer().saveEntity(instance);
+			InfodocContainerFactory.getCaseContainer().saveEntity(instance);
 			return saveActivityInstance(instance, propertyValues, activityInstace);
 			
 		} catch (Exception e) {
@@ -190,8 +190,8 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 		}
 	}
 	
-	private ProcessInstance saveActivityInstance(ProcessInstance processInstance, List<PropertyValue> propertyValues, ActivityInstance activityInstance) {
-		activityInstance.setProcessInstance(processInstance);
+	private Case saveActivityInstance(Case caseDto, List<PropertyValue> propertyValues, ActivityInstance activityInstance) {
+		activityInstance.setCase(caseDto);
 		InfodocContainerFactory.getActivityInstanceContainer().saveEntity(activityInstance);
 		
 		if(propertyValues != null) {
@@ -200,10 +200,10 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 			}
 		}
 		
-		return InfodocContainerFactory.getProcessInstanceContainer().getEntity(processInstance.getId());
+		return InfodocContainerFactory.getCaseContainer().getEntity(caseDto.getId());
 	}
 	
-	public Object getValue(ProcessInstance pi, Property property) {
+	public Object getValue(Case pi, Property property) {
 		if(pi.getPropertyValues() != null) {
 			for(PropertyValue value : pi.getPropertyValues()) {
 				if(value.getProperty().getId().equals(property.getId())) {
@@ -215,7 +215,7 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 		return null;
 	}
 	
-	public ActivityInstance getFisrtActivityInstance(ProcessInstance instance) {
+	public ActivityInstance getFisrtActivityInstance(Case instance) {
 		ActivityInstance activityInstance = null;
 		
 		if(instance.getActivityInstances() != null && !instance.getActivityInstances().isEmpty()) {
@@ -225,7 +225,7 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 		return activityInstance;
 	}
 
-	public ActivityInstance getLastActivityInstance(ProcessInstance instance) {
+	public ActivityInstance getLastActivityInstance(Case instance) {
 		ActivityInstance activityInstance = null;
 		
 		if(instance.getActivityInstances() != null && !instance.getActivityInstances().isEmpty()) {
@@ -236,7 +236,7 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 	}
 
 	public Collection<Long> search(
-		Process process,
+		Form form,
 		List<PropertyValue> propertyValues,
 		String number,
 		Activity activity,
@@ -255,16 +255,16 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 		for(PropertyValue value : propertyValues) {
 			String query =
 			"select distinct pi.id" +
-			" from ProcessInstance pi" +
+			" from Case pi" +
 			" left join pi.propertyValues value" +
 			" left join value.classificationsValueValue classificationsValueValue" +
-			" left join value.processInstancesValue processInstancesValue" +
+			" left join value.caseDtosValue caseDtosValue" +
 			" left join pi.activityInstances activityInstance" +
 			" left join activityInstance.assignedUsers assignedUser" +
 			" left join activityInstance.user.userGroup initialUserGroup" +
 			" left join activityInstance.assignedUserGroups assignedUserGroup1" +
 			" left join assignedUser.userGroup assignedUserGroup2" +
-			" where pi.process.id = :processId" +
+			" where pi.form.id = :formId" +
 			" :foundFilter" +
 			" :lastAcitivityFilter" +
 			" :pendingFilter" +
@@ -286,7 +286,7 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 						" and (:dateValue is null or date(value.dateValue) = date(:dateValue))" +
 						" and (:longValue is null or value.longValue = :longValue)" +
 						" :classificationsValueFilter" +
-						" :processInstancesValueFilter" +
+						" :caseDtosValueFilter" +
 					" )" +
 				" ) or " +
 				" (" +
@@ -297,13 +297,13 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 						" and (:dateValue is null)" +
 						" and (:longValue is null)" +
 						" :falseClassificationsValueFilter" +
-						" :falseProcessInstancesValueFilter" +
+						" :falseCasesValueFilter" +
 					" )" +
 				" )" +
 			" )";
 			
 			List<Long> classificationsValuesIds = new ArrayList<Long>();
-			List<Long> processInstancesIds = new ArrayList<Long>();
+			List<Long> caseDtosIds = new ArrayList<Long>();
 			
 			if(value.getClassificationsValueValue() != null && !value.getClassificationsValueValue().isEmpty()) {
 				
@@ -321,20 +321,20 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 				query = query.replace(":falseClassificationsValueFilter", "");
 			}
 			
-			if(value.getProcessInstancesValue() != null && !value.getProcessInstancesValue().isEmpty()) {
+			if(value.getCasesValue() != null && !value.getCasesValue().isEmpty()) {
 				
-				for(ProcessInstance pi : value.getProcessInstancesValue()) {
+				for(Case pi : value.getCasesValue()) {
 					if(pi != null && pi.getId() != null) {
-						processInstancesIds.add(pi.getId());
+						caseDtosIds.add(pi.getId());
 					}
 				}
 				
-				query = query.replace(":processInstancesValueFilter", "and (processInstancesValue.id in (:processInstancesIds))");
-				query = query.replace(":falseProcessInstancesValueFilter", "and (1 = 2)");
+				query = query.replace(":caseDtosValueFilter", "and (caseDtosValue.id in (:caseDtosIds))");
+				query = query.replace(":falseCasesValueFilter", "and (1 = 2)");
 				
 			} else {
-				query = query.replace(":processInstancesValueFilter", "");
-				query = query.replace(":falseProcessInstancesValueFilter", "");
+				query = query.replace(":caseDtosValueFilter", "");
+				query = query.replace(":falseCasesValueFilter", "");
 			}
 			
 			if(foundInstancesIds.isEmpty()) {
@@ -345,7 +345,7 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 			}
 			
 			if(lastActivityInstance) {
-				query = query.replace(":lastAcitivityFilter", "and activityInstance.id = (select max(ai.id) from ActivityInstance ai where ai.processInstance.id = pi.id)");
+				query = query.replace(":lastAcitivityFilter", "and activityInstance.id = (select max(ai.id) from ActivityInstance ai where ai.caseDto.id = pi.id)");
 			} else {
 				query = query.replace(":lastAcitivityFilter", "");
 			}
@@ -357,7 +357,7 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 			}
 			
 			Query q = sessionManager.getSession().createQuery(query);
-			q.setParameter("processId", process.getId());
+			q.setParameter("formId", form.getId());
 			q.setParameter("propertyId", value.getProperty().getId());
 			q.setParameter("stringValue", value.getStringValue() == null || value.getStringValue().isEmpty() ? null : "%" + value.getStringValue() + "%");
 			q.setParameter("booleanValue", value.getBooleanValue() == null || ! value.getBooleanValue() ? null : value.getBooleanValue());
@@ -377,8 +377,8 @@ public class ProcessInstanceContainer extends UserGroupFilteredContainer<Process
 				q.setParameterList("classificationsIds", classificationsValuesIds);
 			}
 			
-			if(value.getProcessInstancesValue() != null && !value.getProcessInstancesValue().isEmpty()) {
-				q.setParameterList("processInstancesIds", processInstancesIds);
+			if(value.getCasesValue() != null && !value.getCasesValue().isEmpty()) {
+				q.setParameterList("caseDtosIds", caseDtosIds);
 			}
 			
 			if(foundInstancesIds.isEmpty()) {

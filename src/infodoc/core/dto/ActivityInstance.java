@@ -45,8 +45,8 @@ public class ActivityInstance extends Dto implements Serializable {
 	private Activity activity;
 	
 	@ManyToOne
-	@JoinColumn(name="process_instance_id", nullable=false)
-	private ProcessInstance processInstance;
+	@JoinColumn(name="case_id", nullable=false)
+	private Case caseDto;
 	
 	@ManyToMany
 	@JoinTable(
@@ -117,12 +117,12 @@ public class ActivityInstance extends Dto implements Serializable {
 		this.activity = activity;
 	}
 
-	public ProcessInstance getProcessInstance() {
-		return processInstance;
+	public Case getCase() {
+		return caseDto;
 	}
 
-	public void setProcessInstance(ProcessInstance processInstance) {
-		this.processInstance = processInstance;
+	public void setCase(Case caseDto) {
+		this.caseDto = caseDto;
 	}
 
 	public Set<UserGroup> getAssignedUserGroups() {

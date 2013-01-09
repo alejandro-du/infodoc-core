@@ -16,15 +16,15 @@ public class HqlReportContainer extends DefaultHbnContainer<HqlReport> {
 		super(HqlReport.class);
 	}
 	
-	public List<HqlReport> listByUserGroupIdAndProcessId(Long userGroupId, Long processId) {
+	public List<HqlReport> listByUserGroupIdAndFormId(Long userGroupId, Long formId) {
 		return query(
 			"select r" +
 			" from HqlReport r join" +
 			" r.userGroups g" +
 			" where g.id = ?" +
-			" and r.process.id = ?" +
+			" and r.form.id = ?" +
 			" and r.disabled is false",
-			new Object[] {userGroupId, processId});
+			new Object[] {userGroupId, formId});
 	}
 	
 	public Collection<?> getQueryResult(String hqlQuery, String[] properties, Class<?>[] classes, String[] paramNames, Object[] params) {

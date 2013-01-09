@@ -1,9 +1,9 @@
 package infodoc.core.ui.activity;
 
 import infodoc.core.container.InfodocContainerFactory;
-import infodoc.core.dto.ProcessInstance;
+import infodoc.core.dto.Case;
 import infodoc.core.dto.UserGroup;
-import infodoc.core.dto.Process;
+import infodoc.core.dto.Form;
 import infodoc.core.dto.Activity;
 import infodoc.core.dto.ActivityInstance;
 import infodoc.core.dto.User;
@@ -19,21 +19,21 @@ public abstract class ActivityExecutor extends CustomComponent {
 	private static final long serialVersionUID = 1L;
 
 	private User user;
-	private Process process;
+	private Form form;
 	private Activity activity;
-	private ProcessInstance uniqueProcessInstance;
+	private Case uniqueCase;
 	
 	public ActivityExecutor() { }
 	
 	public ActivityExecutor(Activity activity, User user) {
-		this.process = activity.getProcess();
+		this.form = activity.getForm();
 		this.activity = activity;
 		this.user = user;
 	}
 	
 	public abstract void initLayout();
 	
-	public abstract Long countAvailableProcessInstances();
+	public abstract Long countAvailableCases();
 	
 	public abstract String getHelp();
 	
@@ -44,9 +44,9 @@ public abstract class ActivityExecutor extends CustomComponent {
 		initLayout();
 	}
 	
-	public ActivityInstance getNewActivityInstance(ProcessInstance processInstance, String comments, Set<User> assignedUsers, Set<UserGroup> assignedUserGroups) {
+	public ActivityInstance getNewActivityInstance(Case caseDto, String comments, Set<User> assignedUsers, Set<UserGroup> assignedUserGroups) {
 		ActivityInstance mewInstance = new ActivityInstance();
-		mewInstance.setProcessInstance(processInstance);
+		mewInstance.setCase(caseDto);
 		mewInstance.setActivity(getActivity());
 		mewInstance.setUser(getUser());
 		mewInstance.setAssignedUsers(assignedUsers);
@@ -61,24 +61,24 @@ public abstract class ActivityExecutor extends CustomComponent {
 		return InfodocContainerFactory.getUserContainer().getEntity(user.getId());
 	}
 
-	public Process getProcess() {
-		return process;
+	public Form getForm() {
+		return form;
 	}
 
 	public Activity getActivity() {
 		return activity;
 	}
 
-	public ProcessInstance getUniqueProcessInstance() {
-		if(uniqueProcessInstance != null) {
-			uniqueProcessInstance = InfodocContainerFactory.getProcessInstanceContainer().getEntity(uniqueProcessInstance.getId());
+	public Case getUniqueCase() {
+		if(uniqueCase != null) {
+			uniqueCase = InfodocContainerFactory.getCaseContainer().getEntity(uniqueCase.getId());
 		}
 		
-		return uniqueProcessInstance;
+		return uniqueCase;
 	}
 
-	public void setUniqueProcessInstance(ProcessInstance uniqueProcessInstance) {
-		this.uniqueProcessInstance = uniqueProcessInstance;
+	public void setUniqueCase(Case uniqueCase) {
+		this.uniqueCase = uniqueCase;
 	}
 	
 }

@@ -26,9 +26,9 @@ import enterpriseapp.hibernate.annotation.CrudTable;
 import enterpriseapp.hibernate.dto.Dto;
 
 @Entity
-@Table(name="process", uniqueConstraints={@UniqueConstraint(columnNames={"name", "user_group_id"})})
+@Table(name="form", uniqueConstraints={@UniqueConstraint(columnNames={"name", "user_group_id"})})
 @CrudTable(filteringPropertyName="nombre")
-public class Process extends Dto implements Serializable {
+public class Form extends Dto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -51,20 +51,20 @@ public class Process extends Dto implements Serializable {
 	@JoinColumn(name="numeration_id")
 	private Numeration numeration;
 	
-	@OneToMany(mappedBy="process")
+	@OneToMany(mappedBy="form")
 	private Set<Activity> activities;
 	
     @ManyToMany
+    @Sort(type=SortType.COMPARATOR, comparator=Property.class)
 	@JoinTable(
-		name="process_has_property"
+		name="form_has_property"
 		, joinColumns={
-			@JoinColumn(name="process_id")
+			@JoinColumn(name="form_id")
 		}
 		, inverseJoinColumns={
 			@JoinColumn(name="property_id")
 		}
 	)
-    @Sort(type=SortType.COMPARATOR, comparator=Property.class)
 	private Set<Property> properties;
     
     @Column(name="hide_activity_history", nullable=false)

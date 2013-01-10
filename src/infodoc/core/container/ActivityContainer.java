@@ -45,7 +45,7 @@ public class ActivityContainer extends UserGroupFilteredContainer<Activity> {
 			" left join assignedUG.users assignedU2" +
 			" where pi.id = ?" +
 			" and lastAi.id = (select max(ai.id) from ActivityInstance ai where ai.caseDto.id = pi.id)" +
-			" and (assignedU1.id = ? or assignedU2.id = ?)" +
+			" and (assignedU1.id = ? or assignedU2.id = ? or (lastAi.assignedUsers is empty and lastAi.assignedUserGroups is empty))" +
 			" and nextAct.id in (select a.id from User u join u.userGroup ug join ug.activities a where u.id = ?)",
 			new Object [] {caseDtoId, userId, userId, userId}
 		);

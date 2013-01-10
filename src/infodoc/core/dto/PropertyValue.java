@@ -125,11 +125,11 @@ public class PropertyValue extends Dto implements Serializable, Comparator<Prope
 		this.property = property;
 	}
 
-	public Case getCase() {
+	public Case getCaseDto() {
 		return caseDto;
 	}
 
-	public void setCase(Case caseDto) {
+	public void setCaseDto(Case caseDto) {
 		this.caseDto = caseDto;
 	}
 
@@ -165,11 +165,11 @@ public class PropertyValue extends Dto implements Serializable, Comparator<Prope
 		this.classificationsValueValue = classificationsValueValue;
 	}
 	
-	public Set<Case> getCasesValue() {
+	public Set<Case> getCaseDtosValue() {
 		return caseDtosValue;
 	}
 	
-	public void setCasesValue(Set<Case> caseDtosValue) {
+	public void setCaseDtosValue(Set<Case> caseDtosValue) {
 		this.caseDtosValue = caseDtosValue;
 	}
 	

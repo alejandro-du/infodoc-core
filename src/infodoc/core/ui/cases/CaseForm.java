@@ -181,7 +181,7 @@ public class CaseForm extends com.vaadin.ui.Form {
 					value.setProperty(property);
 				}
 				
-				value.setCase(instance);
+				value.setCaseDto(instance);
 				values.add(value);
 				
 				if(field.getValue() != null && field.isVisible()) {
@@ -207,7 +207,7 @@ public class CaseForm extends com.vaadin.ui.Form {
 							
 						} else if(fieldWrapper.getType().equals(FieldType.PROCESS_INSTANCES)) {
 							Set<Case> caseDtos = (Set<Case>) field.getValue();
-							value.setCasesValue(caseDtos);
+							value.setCaseDtosValue(caseDtos);
 							
 						} else if(fieldWrapper.getType().equals(FieldType.DATE)) {
 							value.setDateValue((Date) field.getValue());
@@ -273,6 +273,10 @@ public class CaseForm extends com.vaadin.ui.Form {
 	
 	public boolean isShowShearchProperties() {
 		return showShearchProperties;
+	}
+
+	public Activity getActivity() {
+		return activity;
 	}
 
 }

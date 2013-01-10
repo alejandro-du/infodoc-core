@@ -62,7 +62,7 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 			" left join ai.assignedUserGroups assignedUG" +
 			" left join assignedUG.users assignedU2" +
 			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = pi.id)" +
-			" and (assignedU1.id = ? or assignedU2.id = ?)" +
+			" and (assignedU1.id = ? or assignedU2.id = ? or (ai.assignedUsers is empty and ai.assignedUserGroups is empty))" +
 			" and (? = null or pi.form.id = ?)" +
 			" order by ai.executionTime desc",
 			new Object [] {userId, userId, formId, formId}
@@ -79,7 +79,7 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 			" left join ai.assignedUserGroups assignedUG" +
 			" left join assignedUG.users assignedU2" +
 			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = pi.id)" +
-			" and (assignedU1.id = ? or assignedU2.id = ?)" +
+			" and (assignedU1.id = ? or assignedU2.id = ? or (ai.assignedUsers is empty and ai.assignedUserGroups is empty))" +
 			" and nextAct.id = ?" +
 			" order by ai.executionTime desc",
 			new Object [] {userId, userId, activityId}
@@ -191,7 +191,7 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 	}
 	
 	private Case saveActivityInstance(Case caseDto, List<PropertyValue> propertyValues, ActivityInstance activityInstance) {
-		activityInstance.setCase(caseDto);
+		activityInstance.setCaseDto(caseDto);
 		InfodocContainerFactory.getActivityInstanceContainer().saveEntity(activityInstance);
 		
 		if(propertyValues != null) {
@@ -321,9 +321,9 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 				query = query.replace(":falseClassificationsValueFilter", "");
 			}
 			
-			if(value.getCasesValue() != null && !value.getCasesValue().isEmpty()) {
+			if(value.getCaseDtosValue() != null && !value.getCaseDtosValue().isEmpty()) {
 				
-				for(Case pi : value.getCasesValue()) {
+				for(Case pi : value.getCaseDtosValue()) {
 					if(pi != null && pi.getId() != null) {
 						caseDtosIds.add(pi.getId());
 					}
@@ -377,7 +377,7 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 				q.setParameterList("classificationsIds", classificationsValuesIds);
 			}
 			
-			if(value.getCasesValue() != null && !value.getCasesValue().isEmpty()) {
+			if(value.getCaseDtosValue() != null && !value.getCaseDtosValue().isEmpty()) {
 				q.setParameterList("caseDtosIds", caseDtosIds);
 			}
 			

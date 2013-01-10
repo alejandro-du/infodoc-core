@@ -136,8 +136,8 @@ public class CaseBox extends CustomComponent {
 			
 			component = downloadField;
 			
-		} else if(value.getCasesValue() != null && !value.getCasesValue().isEmpty()) {
-			Set<Case> instances = value.getCasesValue();
+		} else if(value.getCaseDtosValue() != null && !value.getCaseDtosValue().isEmpty()) {
+			Set<Case> instances = value.getCaseDtosValue();
 			VerticalLayout verticalLayout = new VerticalLayout();
 			verticalLayout.setCaption(value.getProperty().getName());
 			
@@ -218,7 +218,8 @@ public class CaseBox extends CustomComponent {
 	private String getDescription(ActivityInstance activityInstance) {
 		String description = Utils.dateTimeToString(activityInstance.getExecutionTime()) + " - <b>" + activityInstance.getActivity().getName() + ": </b>";
 		
-		description = description + "<span class='" + InfodocTheme.CLASS_INITIAL_USERS + "'>" + activityInstance.getUser().getLogin() + "<span>";
+		String executedBy = activityInstance.getUser().getLogin();
+		description = description + "<span class='" + InfodocTheme.CLASS_INITIAL_USERS + "'>" + executedBy + "<span>";
 		String assignedTo = "";
 		
 		if(activityInstance.getAssignedUsers() != null && !activityInstance.getAssignedUsers().isEmpty()) {
@@ -229,7 +230,7 @@ public class CaseBox extends CustomComponent {
 			assignedTo = activityInstance.getAssignedUserGroups().toString().replace("[", "").replace("]", "");
 		}
 		
-		if(!assignedTo.isEmpty()) {
+		if(!assignedTo.isEmpty() && !assignedTo.equals(executedBy)) {
 			description += " -> " + "<span class='" + InfodocTheme.CLASS_END_USERS + "'>" + assignedTo + "<span>";
 		}
 		

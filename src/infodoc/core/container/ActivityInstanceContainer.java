@@ -147,7 +147,7 @@ public class ActivityInstanceContainer extends UserGroupFilteredContainer<Activi
 	}
 
 	public ActivityInstance findPreviousInstance(ActivityInstance instance) {
-		Case caseDto = InfodocContainerFactory.getCaseContainer().getEntity(instance.getCase().getId());
+		Case caseDto = InfodocContainerFactory.getCaseContainer().getEntity(instance.getCaseDto().getId());
 		ActivityInstance previous = null;
 		
 		if(caseDto.getActivityInstances() != null) {

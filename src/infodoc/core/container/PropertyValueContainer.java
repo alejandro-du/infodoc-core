@@ -51,7 +51,7 @@ public class PropertyValueContainer extends UserGroupFilteredContainer<PropertyV
 				value = propertyValue.getClassificationsValueValue();
 				
 			} else if(fieldWrapper.getType().equals(FieldType.PROCESS_INSTANCES)) {
-				value = propertyValue.getCasesValue();
+				value = propertyValue.getCaseDtosValue();
 				
 			} else if(fieldWrapper.getType().equals(FieldType.DATE)) {
 				value = propertyValue.getDateValue();
@@ -86,8 +86,8 @@ public class PropertyValueContainer extends UserGroupFilteredContainer<PropertyV
 		} else if(propertyValue.getClassificationsValueValue() != null && !propertyValue.getClassificationsValueValue().isEmpty()) {
 			value = propertyValue.getClassificationsValueValue().toString().replace("[", "").replace("]", "");
 			
-		} else if(propertyValue.getCasesValue() != null && !propertyValue.getCasesValue().isEmpty()) {
-			value = propertyValue.getCasesValue().toString().replace("[", "").replace("]", "");
+		} else if(propertyValue.getCaseDtosValue() != null && !propertyValue.getCaseDtosValue().isEmpty()) {
+			value = propertyValue.getCaseDtosValue().toString().replace("[", "").replace("]", "");
 			
 		} else if(propertyValue.getDateValue() != null) {
 			value = Utils.dateToString(propertyValue.getDateValue());

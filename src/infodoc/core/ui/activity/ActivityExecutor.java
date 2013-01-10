@@ -46,7 +46,7 @@ public abstract class ActivityExecutor extends CustomComponent {
 	
 	public ActivityInstance getNewActivityInstance(Case caseDto, String comments, Set<User> assignedUsers, Set<UserGroup> assignedUserGroups) {
 		ActivityInstance mewInstance = new ActivityInstance();
-		mewInstance.setCase(caseDto);
+		mewInstance.setCaseDto(caseDto);
 		mewInstance.setActivity(getActivity());
 		mewInstance.setUser(getUser());
 		mewInstance.setAssignedUsers(assignedUsers);

@@ -199,10 +199,10 @@ public class NotificationInstanceContainer extends UserGroupFilteredContainer<No
 		String values = "";
 		
 		if(notification.getIncludeProperties()) {
-			values += "<i>" + InfodocConstants.uiFormNumber + "</i>: " + instance.getActivityInstance().getCase().getNumber();
+			values += "<i>" + InfodocConstants.uiFormNumber + "</i>: " + instance.getActivityInstance().getCaseDto().getNumber();
 			values += "<br/>";
 			
-			for(PropertyValue value : instance.getActivityInstance().getCase().getPropertyValues()) {
+			for(PropertyValue value : instance.getActivityInstance().getCaseDto().getPropertyValues()) {
 				String valorString = propertyValueContainer.getStringValue(value);
 				
 				if(valorString != null && !valorString.isEmpty()) {

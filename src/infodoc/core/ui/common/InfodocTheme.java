@@ -48,9 +48,9 @@ public class InfodocTheme extends ChameleonTheme {
 	public static final String iconsDirectory = "icons";
 	
 	public static final String iconActivityCreate = "icons/activity-create.png";
-	public static final String iconActivityForm = "icons/activity-form.png";
-	public static final String iconActivityFormAssignedWithOtherUser = "icons/activity-form-assigned-with-other-user.png";
-	public static final String iconActivityFormAssgigned = "icons/activity-form-assigned.png";
+	public static final String iconActivityUpdate = "icons/activity-update.png";
+	public static final String iconActivityTransfer = "icons/activity-transfer.png";
+	public static final String iconActivityUnassign = "icons/activity-unassigned.png";
 	public static final String iconActivityAssignUser = "icons/activity-assign-user.png";
 	public static final String iconActivityAssignUserGroup = "icons/activity-assign-user-group.png";
 	

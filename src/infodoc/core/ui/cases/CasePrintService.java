@@ -80,7 +80,7 @@ public class CasePrintService {
 		}
 		
 		output = output
-			.replace("$company", InfodocConstants.infodocCompanyName)
+			.replace("${company}", InfodocConstants.infodocCompanyName)
 			.replace("${number}", caseDto.toString())
 			.replace("${firstActivityInstanceDate}", firstActivityInstanceDate);
 		

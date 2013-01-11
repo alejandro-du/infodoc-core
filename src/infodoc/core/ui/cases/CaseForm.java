@@ -85,37 +85,40 @@ public class CaseForm extends com.vaadin.ui.Form {
 					field = fieldWrapper.getField(property, this, activity, instance.getForm(), getApplication());
 				}
 				
-				if(property.getIcon() != null && !property.getIcon().isEmpty()) {
-					field.setIcon(new ThemeResource(property.getIcon()));
+				if(field != null) {
+					if(property.getIcon() != null && !property.getIcon().isEmpty()) {
+						field.setIcon(new ThemeResource(property.getIcon()));
+					}
+					
+					if(property.getColor() != null && !property.getColor().isEmpty()) {
+						field.addStyleName(property.getColor());
+					}
+					
+					if(property.getBold()) {
+						field.addStyleName(InfodocTheme.CLASS_BOLD);
+					}
+					
+					if(property.getItalic()) {
+						field.addStyleName(InfodocTheme.CLASS_ITALIC);
+					}
+					
+					field.setWidth("100%");
+					field.setCaption(property.getName());
+					field.setRequired(property.getRequired() && !showShearchProperties);
+					
+					Object value = InfodocContainerFactory.getCaseContainer().getValue(instance, property);
+					
+					if(value != null) {
+						field.setValue(value);
+					}
+					
+					if(property.getValidations() != null && !property.getValidations().isEmpty()) {
+						addValidations(property, field);
+					}
+					
+					addField(property.getName(), field);
 				}
 				
-				if(property.getColor() != null && !property.getColor().isEmpty()) {
-					field.addStyleName(property.getColor());
-				}
-				
-				if(property.getBold()) {
-					field.addStyleName(InfodocTheme.CLASS_BOLD);
-				}
-				
-				if(property.getItalic()) {
-					field.addStyleName(InfodocTheme.CLASS_ITALIC);
-				}
-				
-				field.setWidth("100%");
-				field.setCaption(property.getName());
-				field.setRequired(property.getRequired() && !showShearchProperties);
-				
-				Object value = InfodocContainerFactory.getCaseContainer().getValue(instance, property);
-				
-				if(value != null) {
-					field.setValue(value);
-				}
-				
-				if(property.getValidations() != null && !property.getValidations().isEmpty()) {
-					addValidations(property, field);
-				}
-				
-				addField(property.getName(), field);
 			}
 			
 			if(activity != null && activity.getAllowComments()) {

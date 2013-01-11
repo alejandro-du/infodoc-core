@@ -166,6 +166,20 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 			new Object[] {number, formId});
 	}
 	
+	public List<Case> findReferencingCases(Long referencingPropertyId, Long referencedCaseId, Long formId) {
+		return query(
+			"select c" +
+			" from Case c" +
+			" join c.propertyValues pv" +
+			" join pv.property p" +
+			" join pv.caseDtosValue cv" +
+			" where p.id = ?" +
+			" and cv.id = ?" +
+			" and c.form.id = ?",
+			new Object[] {referencingPropertyId, referencedCaseId, formId}
+		);
+	}
+	
 	// TODO: validate consistency
 	public Case updateInstance(Case instance, List<PropertyValue> propertyValues, ActivityInstance activityInstance) {
 		try {

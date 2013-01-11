@@ -2,10 +2,12 @@ package infodoc.core.ui.cases;
 
 import infodoc.core.InfodocConstants;
 import infodoc.core.container.InfodocContainerFactory;
-import infodoc.core.dto.PropertyValue;
-import infodoc.core.dto.Case;
 import infodoc.core.dto.ActivityInstance;
+import infodoc.core.dto.Case;
+import infodoc.core.dto.Property;
+import infodoc.core.dto.PropertyValue;
 import infodoc.core.dto.User;
+import infodoc.core.field.FieldFactory;
 import infodoc.core.ui.activity.ActivityExecutorHelper;
 import infodoc.core.ui.common.InfodocTheme;
 
@@ -69,9 +71,9 @@ public class CaseBox extends CustomComponent {
 	public void attach() {
 		formLayout.removeAllComponents();
 		
-		if(caseDto.getPropertyValues() != null) {
-			for(PropertyValue value : caseDto.getPropertyValues()) {
-				addValue(value, formLayout);
+		if(caseDto.getForm().getProperties() != null) {
+			for(Property property : caseDto.getForm().getProperties()) {
+				addValue(caseDto, property, formLayout);
 			}
 		}
 		
@@ -116,65 +118,87 @@ public class CaseBox extends CustomComponent {
 		formLayout.addComponent(activityHistoryLayout);
 	}
 	
-	public void addValue(final PropertyValue value, Layout layoutToAddTo) {
+	public void addValue(Case caseDto, Property property, Layout layoutToAddTo) {
 		Component component = null;
+		FieldFactory fieldFactory = null;
 		
-		if(value.getByteArrayValue() != null) {
-			DownloadField downloadField = new DownloadField(getApplication()) {
-				private static final long serialVersionUID = 1L;
-				
-				@Override
-				public String getFileName() {
-					return value.getStringValue();
-				}
-			};
+		try {
+			fieldFactory = (FieldFactory) Class.forName(property.getJavaClass()).newInstance();
 			
-			downloadField.setValue(value.getByteArrayValue());
-			downloadField.setReadOnly(true);
-			downloadField.setCaption(value.getProperty().getName());
-			downloadField.setStyleName(InfodocTheme.CAPTION_ITALIC);
-			
-			component = downloadField;
-			
-		} else if(value.getCaseDtosValue() != null && !value.getCaseDtosValue().isEmpty()) {
-			Set<Case> instances = value.getCaseDtosValue();
-			VerticalLayout verticalLayout = new VerticalLayout();
-			verticalLayout.setCaption(value.getProperty().getName());
-			
-			for(final Case caseDto : instances) {
-				Button button = new Button(caseDto.toString());
-				button.setStyleName(InfodocTheme.BUTTON_LINK);
-				setStyle(value, button);
-				button.addListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						showCase(caseDto);
-					}
-				});
-				
-				verticalLayout.addComponent(button);
-			}
-			
-			component = verticalLayout;
-			
-		} else {
-			String v = InfodocContainerFactory.getPropertyValueContainer().getStringValue(value);
-			
-			if(v != null && !v.isEmpty()) {
-				Label label = new Label();
-				label.setStyleName(InfodocTheme.CAPTION_ITALIC);
-				label.setCaption(value.getProperty().getName());
-				label.setValue(v);
-				
-				component = label;
-			}
+		} catch (Exception e) {
+			throw new RuntimeException("Error creating FieldFactory instance: " + property.getJavaClass(), e);
 		}
 		
-		if(component != null) {
-			layoutToAddTo.addComponent(component);
-			setStyle(value, component);
+		if(fieldFactory.getType() == null) {
+			component = fieldFactory.getField(property, new CaseForm(caseDto, null, null), null, caseDto.getForm(), getApplication());
+			
+			if(component != null) {
+				layoutToAddTo.addComponent(component);
+			}
+			
+		} else {
+			for(final PropertyValue value : caseDto.getPropertyValues()) {
+				if(property.equals(value.getProperty())) {
+					if(value.getByteArrayValue() != null) {
+						DownloadField downloadField = new DownloadField(getApplication()) {
+							private static final long serialVersionUID = 1L;
+							
+							@Override
+							public String getFileName() {
+								return value.getStringValue();
+							}
+						};
+						
+						downloadField.setValue(value.getByteArrayValue());
+						downloadField.setReadOnly(true);
+						downloadField.setCaption(value.getProperty().getName());
+						downloadField.setStyleName(InfodocTheme.CAPTION_ITALIC);
+						
+						component = downloadField;
+						
+					} else if(value.getCaseDtosValue() != null && !value.getCaseDtosValue().isEmpty()) {
+						Set<Case> cases = value.getCaseDtosValue();
+						VerticalLayout verticalLayout = new VerticalLayout();
+						verticalLayout.setCaption(value.getProperty().getName());
+						
+						for(final Case c : cases) {
+							Button button = new Button(c.toString());
+							button.setStyleName(InfodocTheme.BUTTON_LINK);
+							setStyle(value, button);
+							button.addListener(new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void buttonClick(ClickEvent event) {
+									showCase(c);
+								}
+							});
+							
+							verticalLayout.addComponent(button);
+						}
+						
+						component = verticalLayout;
+						
+					} else {
+						String v = InfodocContainerFactory.getPropertyValueContainer().getStringValue(value);
+						
+						if(v != null && !v.isEmpty()) {
+							Label label = new Label();
+							label.setStyleName(InfodocTheme.CAPTION_ITALIC);
+							label.setCaption(value.getProperty().getName());
+							label.setValue(v);
+							
+							component = label;
+						}
+					}
+					
+					if(component != null) {
+						layoutToAddTo.addComponent(component);
+						setStyle(value, component);
+						break;
+					}
+				}
+			}
 		}
 	}
 

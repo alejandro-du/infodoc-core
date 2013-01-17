@@ -5,7 +5,7 @@ import enterpriseapp.ui.Constants;
 
 public abstract class InfodocConstants extends Constants {
 	
-	public static final String infodocDeveloperUrl = "http://alejandroduarte.weebly.com";
+	public static final String infodocDeveloperUrl = "http://www.alejandrodu.com";
 	public static final String uiInfodoc = Utils.getProperty("ui.infodoc");
 	public static final String infodocVersion = Utils.getProperty("infodoc.version");
 	public static final String infodocModules = Utils.getProperty("infodoc.modules");

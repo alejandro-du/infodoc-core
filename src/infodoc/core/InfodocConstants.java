@@ -7,6 +7,7 @@ public abstract class InfodocConstants extends Constants {
 	
 	public static final String infodocDeveloperUrl = "http://www.alejandrodu.com";
 	public static final String uiInfodoc = Utils.getProperty("ui.infodoc");
+	public static final String infodocLanguage = Utils.getProperty("infodoc.language");
 	public static final String infodocVersion = Utils.getProperty("infodoc.version");
 	public static final String infodocModules = Utils.getProperty("infodoc.modules");
 	public static final String infodocCompanyName = Utils.getProperty("infodoc.companyName");

@@ -51,8 +51,8 @@ public class UserGroup extends Dto implements Serializable {
 	@Column(name="access_admin_activity_instances", nullable=false)
 	private boolean accessAdminActivityInstances;
 	
-	@Column(name="can_create_modify_users", nullable=false)
-	private boolean canCreateAndModifyUsers;
+	@Column(name="can_create_delete_users", nullable=false)
+	private boolean canCreateAndDeleteUsers;
 	
 	@Column(name="access_hql_query", nullable=false)
 	private boolean accessHqlQuery;
@@ -223,12 +223,12 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessAdminUsers = accessAdminUsers;
 	}
 
-	public boolean getCanCreateAndModifyUsers() {
-		return canCreateAndModifyUsers;
+	public boolean getCanCreateAndDeleteUsers() {
+		return canCreateAndDeleteUsers;
 	}
 
-	public void setCanCreateAndModifyUsers(boolean canCreateAndModifyUsers) {
-		this.canCreateAndModifyUsers = canCreateAndModifyUsers;
+	public void setCanCreateAndDeleteUsers(boolean canCreateAndDeleteUsers) {
+		this.canCreateAndDeleteUsers = canCreateAndDeleteUsers;
 	}
 
 	public boolean getAccessAdminUserGroups() {

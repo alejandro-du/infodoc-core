@@ -92,7 +92,7 @@ public class User extends Dto implements enterpriseapp.hibernate.dto.User, Seria
 		this.password = password;
 	}
 
-	public boolean getExpirePassword() {
+	public boolean isExpirePassword() {
 		return expirePassword;
 	}
 
@@ -100,7 +100,7 @@ public class User extends Dto implements enterpriseapp.hibernate.dto.User, Seria
 		this.expirePassword = expirePassword;
 	}
 
-	public boolean getDisabled() {
+	public boolean isDisabled() {
 		return disabled;
 	}
 

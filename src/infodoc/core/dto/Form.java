@@ -118,7 +118,7 @@ public class Form extends Dto implements Serializable {
 		this.name = name;
 	}
 
-	public boolean getDisabled() {
+	public boolean isDisabled() {
 		return disabled;
 	}
 
@@ -150,7 +150,7 @@ public class Form extends Dto implements Serializable {
 		this.properties = properties;
 	}
 
-	public boolean getHideActivityHistory() {
+	public boolean isHideActivityHistory() {
 		return hideActivityHistory;
 	}
 

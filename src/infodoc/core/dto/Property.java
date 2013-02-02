@@ -210,7 +210,7 @@ public class Property extends Dto implements Serializable, Comparator<Property> 
 		this.color = color;
 	}
 
-	public boolean getBold() {
+	public boolean isBold() {
 		return bold;
 	}
 
@@ -218,7 +218,7 @@ public class Property extends Dto implements Serializable, Comparator<Property> 
 		this.bold = bold;
 	}
 
-	public boolean getItalic() {
+	public boolean isItalic() {
 		return italic;
 	}
 
@@ -226,7 +226,7 @@ public class Property extends Dto implements Serializable, Comparator<Property> 
 		this.italic = italic;
 	}
 
-	public boolean getRequired() {
+	public boolean isRequired() {
 		return required;
 	}
 
@@ -234,7 +234,7 @@ public class Property extends Dto implements Serializable, Comparator<Property> 
 		this.required = required;
 	}
 
-	public boolean getExternal() {
+	public boolean isExternal() {
 		return external;
 	}
 
@@ -242,7 +242,7 @@ public class Property extends Dto implements Serializable, Comparator<Property> 
 		this.external = external;
 	}
 
-	public boolean getShowInTitle() {
+	public boolean isShowInTitle() {
 		return showInTitle;
 	}
 	
@@ -250,7 +250,7 @@ public class Property extends Dto implements Serializable, Comparator<Property> 
 		this.showInTitle = showInTitle;
 	}
 	
-	public boolean getShowInReports() {
+	public boolean isShowInReports() {
 		return showInReports;
 	}
 
@@ -258,7 +258,7 @@ public class Property extends Dto implements Serializable, Comparator<Property> 
 		this.showInReports = howInReports;
 	}
 
-	public boolean getDisabled() {
+	public boolean isDisabled() {
 		return disabled;
 	}
 

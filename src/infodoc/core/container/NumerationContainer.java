@@ -41,7 +41,7 @@ public class NumerationContainer extends UserGroupFilteredContainer<Numeration> 
 	}
 	
 	public void restartIfNeeded(Numeration numeration) {
-		if(numeration.getDailyRestart() || numeration.getMonthlyRestart() || numeration.getAnnualRestart()) {
+		if(numeration.isDailyRestart() || numeration.isMonthlyRestart() || numeration.isAnnualRestart()) {
 			Calendar now = Calendar.getInstance();
 			
 			if(numeration.getNextRestartDate() == null) {
@@ -62,13 +62,13 @@ public class NumerationContainer extends UserGroupFilteredContainer<Numeration> 
 		nextRestartDate.set(Calendar.SECOND, 0);
 		nextRestartDate.set(Calendar.MILLISECOND, 0);
 		
-		if(numeration.getDailyRestart()) {
+		if(numeration.isDailyRestart()) {
 			nextRestartDate.add(Calendar.DAY_OF_MONTH, 1);
 			
-		} else if(numeration.getMonthlyRestart()) {
+		} else if(numeration.isMonthlyRestart()) {
 			nextRestartDate.add(Calendar.MONTH, 1);
 			
-		} else if(numeration.getAnnualRestart()) {
+		} else if(numeration.isAnnualRestart()) {
 			nextRestartDate.add(Calendar.YEAR, 1);
 			
 		} else {

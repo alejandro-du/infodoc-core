@@ -88,7 +88,7 @@ public class JavaReport extends Dto {
 		this.icon = icon;
 	}
 	
-	public boolean getDisabled() {
+	public boolean isDisabled() {
 		return disabled;
 	}
 

@@ -23,7 +23,7 @@ public class NotificationJob extends TransactionalJob {
 		NotificationInstanceContainer notificationInstanceContainer = InfodocContainerFactory.getNotificationInstanceContainer();
 		NotificationInstance notification = notificationInstanceContainer.getEntity(notificationInstanceId);
 		
-		if(!notification.getCanceled() && !notification.getSent()) {
+		if(!notification.isCanceled() && !notification.isSent()) {
 			sendEmail(notification);
 			notification.setSent(true);
 			notification.setCanceled(false);

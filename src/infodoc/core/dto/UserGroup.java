@@ -207,7 +207,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.name = name;
 	}
 
-	public boolean getAccessAdminModule() {
+	public boolean isAccessAdminModule() {
 		return accessAdminModule;
 	}
 
@@ -215,7 +215,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessAdminModule = accessAdminModule;
 	}
 
-	public boolean getAccessAdminUsers() {
+	public boolean isAccessAdminUsers() {
 		return accessAdminUsers;
 	}
 
@@ -223,7 +223,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessAdminUsers = accessAdminUsers;
 	}
 
-	public boolean getCanCreateAndDeleteUsers() {
+	public boolean isCanCreateAndDeleteUsers() {
 		return canCreateAndDeleteUsers;
 	}
 
@@ -231,7 +231,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.canCreateAndDeleteUsers = canCreateAndDeleteUsers;
 	}
 
-	public boolean getAccessAdminUserGroups() {
+	public boolean isAccessAdminUserGroups() {
 		return accessAdminUserGroups;
 	}
 
@@ -239,7 +239,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessAdminUserGroups = accessAdminUserGroups;
 	}
 
-	public boolean getAccessHqlQuery() {
+	public boolean isAccessHqlQuery() {
 		return accessHqlQuery;
 	}
 	
@@ -247,7 +247,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessHqlQuery = accessHqlQuery;
 	}
 
-	public boolean getAccessAdminHqlReports() {
+	public boolean isAccessAdminHqlReports() {
 		return accessAdminHqlReports;
 	}
 
@@ -255,7 +255,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessAdminHqlReports = accessAdminHqlReports;
 	}
 
-	public boolean getAccessAuditLog() {
+	public boolean isAccessAuditLog() {
 		return accessAuditLog;
 	}
 
@@ -263,7 +263,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessAuditLog = accessAuditLog;
 	}
 	
-	public boolean getAccessLogFiles() {
+	public boolean isAccessLogFiles() {
 		return accessLogFiles;
 	}
 
@@ -271,7 +271,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessLogFiles = accessLogFiles;
 	}
 
-	public boolean getAccesoConfigModule() {
+	public boolean isAccesoConfigModule() {
 		return accesoConfigModule;
 	}
 
@@ -279,7 +279,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accesoConfigModule = accesoConfigModule;
 	}
 
-	public boolean getAccessConfigProperties() {
+	public boolean isAccessConfigProperties() {
 		return accessConfigProperties;
 	}
 
@@ -287,7 +287,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessConfigProperties = accessConfigProperties;
 	}
 
-	public boolean getAccessConfigValidations() {
+	public boolean isAccessConfigValidations() {
 		return accessConfigValidations;
 	}
 
@@ -295,7 +295,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessConfigValidations = accessConfigValidations;
 	}
 
-	public boolean getAccessConfigNumeration() {
+	public boolean isAccessConfigNumeration() {
 		return accessConfigNumeration;
 	}
 
@@ -303,7 +303,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessConfigNumeration = accessConfigNumeration;
 	}
 
-	public boolean getAccessConfigForms() {
+	public boolean isAccessConfigForms() {
 		return accessConfigForms;
 	}
 
@@ -311,7 +311,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessConfigForms = accessConfigForms;
 	}
 
-	public boolean getAccessConfigActivities() {
+	public boolean isAccessConfigActivities() {
 		return accessConfigActivities;
 	}
 
@@ -319,7 +319,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessConfigActivities = accessConfigActivities;
 	}
 
-	public boolean getAccessConfigNotifications() {
+	public boolean isAccessConfigNotifications() {
 		return accessConfigNotifications;
 	}
 
@@ -327,7 +327,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessConfigNotifications = accessConfigNotifications;
 	}
 
-	public boolean getAccessConfigClassifications() {
+	public boolean isAccessConfigClassifications() {
 		return accessConfigClassifications;
 	}
 
@@ -335,7 +335,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessConfigClassifications = accessConfigClassifications;
 	}
 
-	public boolean getAccessConfigClassificationValues() {
+	public boolean isAccessConfigClassificationValues() {
 		return accessConfigClassificationValues;
 	}
 
@@ -343,7 +343,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessConfigClassificationValues = accessConfigClassificationValues;
 	}
 
-	public boolean getAccessAdminCases() {
+	public boolean isAccessAdminCases() {
 		return accessAdminCases;
 	}
 
@@ -351,7 +351,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessAdminCases = accessAdminCases;
 	}
 
-	public boolean getAccessAdminPropertyValues() {
+	public boolean isAccessAdminPropertyValues() {
 		return accessAdminPropertyValues;
 	}
 
@@ -359,7 +359,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessAdminPropertyValues = accessAdminPropertyValues;
 	}
 
-	public boolean getAccessAdminActivityInstances() {
+	public boolean isAccessAdminActivityInstances() {
 		return accessAdminActivityInstances;
 	}
 
@@ -367,7 +367,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessAdminActivityInstances = accessAdminActivityInstances;
 	}
 
-	public boolean getAccessAdminNotificationInstances() {
+	public boolean isAccessAdminNotificationInstances() {
 		return accessAdminNotificationInstances;
 	}
 
@@ -375,7 +375,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessAdminNotificationInstances = accessAdminNotificationInstances;
 	}
 
-	public boolean getAccessBasicModule() {
+	public boolean isAccessBasicModule() {
 		return accessBasicModule;
 	}
 
@@ -383,7 +383,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessBasicModule = accessBasicModule;
 	}
 
-	public boolean getAccessLastActivityInstances() {
+	public boolean isAccessLastActivityInstances() {
 		return accessLastActivityInstances;
 	}
 
@@ -391,7 +391,7 @@ public class UserGroup extends Dto implements Serializable {
 		this.accessLastActivityInstances = accessLastActivityInstances;
 	}
 
-	public boolean getAccessAdminJavaReports() {
+	public boolean isAccessAdminJavaReports() {
 		return accessAdminJavaReports;
 	}
 	

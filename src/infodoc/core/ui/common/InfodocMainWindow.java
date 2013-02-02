@@ -56,7 +56,7 @@ public class InfodocMainWindow extends MDIWindow {
 	}
 
 	public void checkPasswordExpired() {
-		if(user.getExpirePassword()) {
+		if(user.isExpirePassword()) {
 			OptionsWindow window = new OptionsWindow();
 			window.setForceNewPassword(true);
 			getWindow().addWindow(window);

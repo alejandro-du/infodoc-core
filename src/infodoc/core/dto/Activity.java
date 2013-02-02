@@ -122,7 +122,7 @@ public class Activity extends Dto implements Serializable {
 		this.parameter = parameter;
 	}
 
-	public boolean getAllowComments() {
+	public boolean isAllowComments() {
 		return allowComments;
 	}
 
@@ -130,7 +130,7 @@ public class Activity extends Dto implements Serializable {
 		this.allowComments = allowComments;
 	}
 
-	public boolean getDisabled() {
+	public boolean isDisabled() {
 		return disabled;
 	}
 

@@ -101,7 +101,7 @@ public class CaseBox extends CustomComponent {
 		
 		mainPanel.addComponent(printLayout);
 		
-		if(caseDto.getActivityInstances() != null && !caseDto.getForm().getHideActivityHistory()) {
+		if(caseDto.getActivityInstances() != null && !caseDto.getForm().isHideActivityHistory()) {
 			for(ActivityInstance activityInstance : caseDto.getActivityInstances()) {
 				addActivityInstance(activityInstance);
 			}
@@ -111,7 +111,7 @@ public class CaseBox extends CustomComponent {
 		activityHistoryLayout.setWidth("100%");
 		activityHistoryLayout.setMargin(true, false, false, false);
 		
-		if(!caseDto.getForm().getHideActivityHistory()) {
+		if(!caseDto.getForm().isHideActivityHistory()) {
 			activityHistoryLayout.addComponent(activityInstancesPanel);
 		}
 		
@@ -211,11 +211,11 @@ public class CaseBox extends CustomComponent {
 			component.addStyleName(value.getProperty().getColor());
 		}
 		
-		if(value.getProperty().getBold()) {
+		if(value.getProperty().isBold()) {
 			component.addStyleName(InfodocTheme.CLASS_BOLD);
 		}
 		
-		if(value.getProperty().getItalic()) {
+		if(value.getProperty().isItalic()) {
 			component.addStyleName(InfodocTheme.CLASS_ITALIC);
 		}
 	}

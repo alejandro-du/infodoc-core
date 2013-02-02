@@ -76,7 +76,7 @@ public class Case extends Dto implements Serializable {
 			SortedSet<PropertyValue> propertyValues = InfodocContainerFactory.getCaseContainer().getEntity(id).getPropertyValues();
 			
 			for(PropertyValue propertyValue : propertyValues) {
-				if(propertyValue.getProperty().getShowInTitle()) {
+				if(propertyValue.getProperty().isShowInTitle()) {
 					String value = propertyValueContainer.getStringValue(propertyValue);
 					
 					if(value != null && !value.isEmpty()) {

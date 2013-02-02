@@ -117,7 +117,7 @@ public class NotificationInstanceContainer extends UserGroupFilteredContainer<No
 
 	public void schedule(NotificationInstance instance) {
 		try {
-			if(!instance.getSent() && !instance.getCanceled()) {
+			if(!instance.isSent() && !instance.isCanceled()) {
 				if(Calendar.getInstance().getTime().before(instance.getSendTime())) {
 					JobKey jobKey = new JobKey(instance.getId().toString());
 					
@@ -146,11 +146,11 @@ public class NotificationInstanceContainer extends UserGroupFilteredContainer<No
 		HashSet<String> recipients = new HashSet<String>();
 		Notification notification = instance.getNotification();
 		
-		if(notification.getNotifyCurrentUser()) {
+		if(notification.isNotifyCurrentUser()) {
 			recipients.add(instance.getActivityInstance().getUser().getLogin());
 		}
 		
-		if(notification.getNotifyNextUsers() && instance.getActivityInstance().getAssignedUsers() != null) {
+		if(notification.isNotifyNextUsers() && instance.getActivityInstance().getAssignedUsers() != null) {
 			for(User user : instance.getActivityInstance().getAssignedUsers()) {
 				recipients.add(user.getLogin());
 			}
@@ -164,7 +164,7 @@ public class NotificationInstanceContainer extends UserGroupFilteredContainer<No
 			}
 		}
 		
-		if(notification.getNotifyNextUserGroups() && instance.getActivityInstance().getAssignedUserGroups() != null) {
+		if(notification.isNotifyNextUserGroups() && instance.getActivityInstance().getAssignedUserGroups() != null) {
 			for(UserGroup userGroup : instance.getActivityInstance().getAssignedUserGroups()) {
 				for(User user : userGroup.getUsers()) {
 					recipients.add(user.getLogin());
@@ -198,7 +198,7 @@ public class NotificationInstanceContainer extends UserGroupFilteredContainer<No
 		
 		String values = "";
 		
-		if(notification.getIncludeProperties()) {
+		if(notification.isIncludeProperties()) {
 			values += "<i>" + InfodocConstants.uiFormNumber + "</i>: " + instance.getActivityInstance().getCaseDto().getNumber();
 			values += "<br/>";
 			

@@ -78,7 +78,7 @@ public class NotificationInstance extends Dto implements Serializable {
 		this.sendTime = sendTime;
 	}
 
-	public boolean getSent() {
+	public boolean isSent() {
 		return sent;
 	}
 
@@ -86,7 +86,7 @@ public class NotificationInstance extends Dto implements Serializable {
 		this.sent = sent;
 	}
 
-	public boolean getCanceled() {
+	public boolean isCanceled() {
 		return canceled;
 	}
 

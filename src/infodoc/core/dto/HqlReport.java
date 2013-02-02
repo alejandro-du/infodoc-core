@@ -100,7 +100,7 @@ public class HqlReport extends Dto {
 		this.hqlQuery = hqlQuery;
 	}
 	
-	public boolean getDisabled() {
+	public boolean isDisabled() {
 		return disabled;
 	}
 

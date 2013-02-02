@@ -107,7 +107,7 @@ public class Notification extends Dto implements Serializable {
 		this.activity = activity;
 	}
 
-	public boolean getNotifyCurrentUser() {
+	public boolean isNotifyCurrentUser() {
 		return notifyCurrentUser;
 	}
 
@@ -115,7 +115,7 @@ public class Notification extends Dto implements Serializable {
 		this.notifyCurrentUser = notifyCurrentUser;
 	}
 
-	public boolean getNotifyNextUsers() {
+	public boolean isNotifyNextUsers() {
 		return notifyNextUsers;
 	}
 
@@ -131,7 +131,7 @@ public class Notification extends Dto implements Serializable {
 		this.notifyCurrentUserGroup = notifyCurrentUserGroup;
 	}
 
-	public boolean getNotifyNextUserGroups() {
+	public boolean isNotifyNextUserGroups() {
 		return notifyNextUserGroups;
 	}
 
@@ -187,7 +187,7 @@ public class Notification extends Dto implements Serializable {
 		this.sendAfterMonths = sendAfterMonths;
 	}
 
-	public boolean getAutomaticallyCancel() {
+	public boolean isAutomaticallyCancel() {
 		return automaticallyCancel;
 	}
 
@@ -211,7 +211,7 @@ public class Notification extends Dto implements Serializable {
 		this.message = message;
 	}
 
-	public boolean getIncludeProperties() {
+	public boolean isIncludeProperties() {
 		return includeProperties;
 	}
 
@@ -219,7 +219,7 @@ public class Notification extends Dto implements Serializable {
 		this.includeProperties = includeProperties;
 	}
 
-	public boolean getDisabled() {
+	public boolean isDisabled() {
 		return disabled;
 	}
 

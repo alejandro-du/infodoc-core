@@ -110,7 +110,7 @@ public class Numeration extends Dto implements Serializable {
 		this.initialValue = valorInicial;
 	}
 
-	public boolean getAnnualRestart() {
+	public boolean isAnnualRestart() {
 		return annualRestart;
 	}
 
@@ -118,7 +118,7 @@ public class Numeration extends Dto implements Serializable {
 		this.annualRestart = annualRestart;
 	}
 
-	public boolean getMonthlyRestart() {
+	public boolean isMonthlyRestart() {
 		return monthlyRestart;
 	}
 
@@ -126,7 +126,7 @@ public class Numeration extends Dto implements Serializable {
 		this.monthlyRestart = monthlyRestart;
 	}
 
-	public boolean getDailyRestart() {
+	public boolean isDailyRestart() {
 		return dailyRestart;
 	}
 

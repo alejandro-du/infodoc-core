@@ -94,17 +94,17 @@ public class CaseForm extends com.vaadin.ui.Form {
 						field.addStyleName(property.getColor());
 					}
 					
-					if(property.getBold()) {
+					if(property.isBold()) {
 						field.addStyleName(InfodocTheme.CLASS_BOLD);
 					}
 					
-					if(property.getItalic()) {
+					if(property.isItalic()) {
 						field.addStyleName(InfodocTheme.CLASS_ITALIC);
 					}
 					
 					field.setWidth("100%");
 					field.setCaption(property.getName());
-					field.setRequired(property.getRequired() && !showShearchProperties);
+					field.setRequired(property.isRequired() && !showShearchProperties);
 					
 					Object value = InfodocContainerFactory.getCaseContainer().getValue(instance, property);
 					
@@ -121,7 +121,7 @@ public class CaseForm extends com.vaadin.ui.Form {
 				
 			}
 			
-			if(activity != null && activity.getAllowComments()) {
+			if(activity != null && activity.isAllowComments()) {
 				commentsTextField = new TextField(InfodocConstants.uiObservations);
 				commentsTextField.setWidth("100%");
 				commentsTextField.setIcon(new ThemeResource(InfodocTheme.iconComments));

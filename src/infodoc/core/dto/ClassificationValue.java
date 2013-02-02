@@ -58,7 +58,7 @@ public class ClassificationValue extends Dto implements Serializable {
 		this.name = name;
 	}
 
-	public boolean getDisabled() {
+	public boolean isDisabled() {
 		return disabled;
 	}
 

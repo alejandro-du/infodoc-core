@@ -16,9 +16,9 @@ import ar.com.fdvs.dj.domain.constants.Font;
 import ar.com.fdvs.dj.domain.constants.HorizontalAlign;
 import ar.com.fdvs.dj.domain.entities.columns.AbstractColumn;
 import enterpriseapp.Utils;
-import enterpriseapp.ui.reports.AbstractReport;
+import enterpriseapp.ui.reports.PrintViewReport;
 
-public abstract class InfodocReport extends AbstractReport {
+public abstract class InfodocReport extends PrintViewReport {
 
 	private static final long serialVersionUID = 1L;
 	

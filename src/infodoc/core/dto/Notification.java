@@ -123,7 +123,7 @@ public class Notification extends Dto implements Serializable {
 		this.notifyNextUsers = notifyNextUsers;
 	}
 
-	public boolean notifyCurrentUserGroup() {
+	public boolean isNotifyCurrentUserGroup() {
 		return notifyCurrentUserGroup;
 	}
 

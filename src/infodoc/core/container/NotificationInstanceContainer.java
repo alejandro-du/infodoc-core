@@ -156,7 +156,7 @@ public class NotificationInstanceContainer extends UserGroupFilteredContainer<No
 			}
 		}
 		
-		if(notification.notifyCurrentUserGroup()) {
+		if(notification.isNotifyCurrentUserGroup()) {
 			List<User> users = InfodocContainerFactory.getUserContainer().findByUserGroupId(instance.getActivityInstance().getUser().getUserGroup().getId());
 			
 			for(User user : users) {
@@ -199,7 +199,14 @@ public class NotificationInstanceContainer extends UserGroupFilteredContainer<No
 		String values = "";
 		
 		if(notification.isIncludeProperties()) {
-			values += "<i>" + InfodocConstants.uiFormNumber + "</i>: " + instance.getActivityInstance().getCaseDto().getNumber();
+			values += "<i>" + InfodocConstants.uiFormNumber + "</i>: ";
+			
+			if(instance.getActivityInstance().getCaseDto().getNumber() != null) {
+				values += instance.getActivityInstance().getCaseDto().getNumber();
+			} else {
+				values += instance.getActivityInstance().getCaseDto().getId();
+			}
+			
 			values += "<br/>";
 			
 			for(PropertyValue value : instance.getActivityInstance().getCaseDto().getPropertyValues()) {

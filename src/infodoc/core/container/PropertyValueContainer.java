@@ -29,6 +29,12 @@ public class PropertyValueContainer extends UserGroupFilteredContainer<PropertyV
 		return (Serializable) getIdForPojo(propertyValue);
 	}
 	
+	public PropertyValue getByCaseIdAndPropertyId(Long caseId, Long propertyId) {
+		return singleQuery(
+			"from PropertyValue where caseDto.id = ? and property.id = ?",
+			new Object[] {caseId, propertyId});
+	}
+	
 	public Object getValue(PropertyValue propertyValue) {
 		Object value = null;
 		

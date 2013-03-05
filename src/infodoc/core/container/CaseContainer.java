@@ -45,25 +45,25 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 	
 	public Case getCurrentByNumber(Long number) {
 		return singleQuery(
-			"select pi" +
-			" from Case pi" +
-			" where pi.number = ?" +
-			" order by pi.id desc" +
+			"select c" +
+			" from Case c" +
+			" where c.number = ?" +
+			" order by c.id desc" +
 			" limit 1", new Object[] {number});
 	}
 	
 	public List<Case> findMyCases(Long userId, Long formId) {
 		return query(
-			"select distinct pi" +
-			" from Case pi" +
-			" join pi.activityInstances ai" +
+			"select distinct c" +
+			" from Case c" +
+			" join c.activityInstances ai" +
 			" join ai.activity.nextActivities nextAct" +
 			" left join ai.assignedUsers assignedU1" +
 			" left join ai.assignedUserGroups assignedUG" +
 			" left join assignedUG.users assignedU2" +
-			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = pi.id)" +
+			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = c.id)" +
 			" and (assignedU1.id = ? or assignedU2.id = ? or (ai.assignedUsers is empty and ai.assignedUserGroups is empty))" +
-			" and (? = null or pi.form.id = ?)" +
+			" and (? = null or c.form.id = ?)" +
 			" order by ai.executionTime desc",
 			new Object [] {userId, userId, formId, formId}
 		);
@@ -71,14 +71,14 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 
 	public List<Case> findAvailableByUserIdAndNextActivityId(Long userId, Long activityId) {
 		return query(
-			"select distinct pi" +
-			" from Case pi" +
-			" join pi.activityInstances ai" +
+			"select distinct c" +
+			" from Case c" +
+			" join c.activityInstances ai" +
 			" join ai.activity.nextActivities nextAct" +
 			" left join ai.assignedUsers assignedU1" +
 			" left join ai.assignedUserGroups assignedUG" +
 			" left join assignedUG.users assignedU2" +
-			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = pi.id)" +
+			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = c.id)" +
 			" and (assignedU1.id = ? or assignedU2.id = ? or (ai.assignedUsers is empty and ai.assignedUserGroups is empty))" +
 			" and nextAct.id = ?" +
 			" order by ai.executionTime desc",
@@ -88,11 +88,11 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 
 	public List<Case> findAssignedToOtherUserByUserIdAndNextActivityId(Long userId, Long activityId) {
 		return query(
-			"select distinct pi" +
-			" from Case pi" +
-			" join pi.activityInstances ai" +
+			"select distinct c" +
+			" from Case c" +
+			" join c.activityInstances ai" +
 			" join ai.activity.nextActivities nextAct" +
-			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai.caseDto.id = pi.id)" +
+			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai.caseDto.id = c.id)" +
 			" and ai.user.id = ?" +
 			" and nextAct.id = ?" +
 			" and ai.user.id not in (select u.id from ActivityInstance ai2 join ai2.assignedUsers u where ai2.id = ai.id)",
@@ -102,10 +102,10 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 	
 	public List<Case> findAssignedByUserIdAndCurrentActivityId(Long userId, Long activityId) {
 		return query(
-			"select distinct pi" +
-			" from Case pi" +
-			" join pi.activityInstances ai" +
-			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = pi.id)" +
+			"select distinct c" +
+			" from Case c" +
+			" join c.activityInstances ai" +
+			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = c.id)" +
 			" and ai.user.id = ?" +
 			" and ai.activity.id = ?",
 			new Object [] {userId, activityId}
@@ -114,25 +114,25 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 	
 	public List<Case> findByActivityId(Long activityId) {
 		return query(
-				"select distinct pi" +
-				" from Case pi" +
-				" join pi.activityInstances ai" +
-				" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = pi.id)" +
+				"select distinct c" +
+				" from Case c" +
+				" join c.activityInstances ai" +
+				" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = c.id)" +
 				" and ai.activity.id = ?" +
-				" and pi." + getHqlConditionToFilterByUserGroup(),
+				" and c." + getHqlConditionToFilterByUserGroup(),
 				new Object [] {activityId}
 			);
 	}
 	
 	public List<Case> findPendingByFormId(Long formId, Date from, Date to) {
 		return query(
-			"select distinct pi" +
-			" from Case pi" +
-			" join pi.activityInstance lastAi" +
-			" join pi.activityInstance firstAi" +
-			" where firstAi.id = (select min(ai.id) from ActivityInstance ai where ai.caseDto.id = pi.id)" +
-			" and lastAi.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = pi.id)" +
-			" and pi.form.id = ?" +
+			"select distinct c" +
+			" from Case c" +
+			" join c.activityInstances lastAi" +
+			" join c.activityInstances firstAi" +
+			" where firstAi.id = (select min(ai.id) from ActivityInstance ai where ai.caseDto.id = c.id)" +
+			" and lastAi.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = c.id)" +
+			" and c.form.id = ?" +
 			" and date(firstAi.executionTime) >= date(?)" +
 			" and date(lastAi.executionTime) <= date(?)",
 			new Object [] {formId, from, to}
@@ -141,14 +141,14 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 	
 	public List<Case> findFinishedByFormId(Long formId, Date from, Date to) {
 		return query(
-			"select distinct pi" +
-			" from Case pi" +
-			" join pi.activityInstances lastAi" +
-			" join pi.activityInstances firstAi" +
+			"select distinct c" +
+			" from Case c" +
+			" join c.activityInstances lastAi" +
+			" join c.activityInstances firstAi" +
 			" left join lastAi.activity.nextActivities nextAct" +
-			" where firstAi.id = (select min(ai.id) from ActivityInstance ai where ai.caseDto.id = pi.id)" +
-			" and lastAi.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = pi.id)" +
-			" and pi.form.id = ?" +
+			" where firstAi.id = (select min(ai.id) from ActivityInstance ai where ai.caseDto.id = c.id)" +
+			" and lastAi.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = c.id)" +
+			" and c.form.id = ?" +
 			" and nextAct is null" +
 			" and date(firstAi.executionTime) >= date(?)" +
 			" and date(lastAi.executionTime) <= date(?)",
@@ -158,11 +158,11 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 
 	public List<Case> findByNumberAndFormId(Long number, Long formId) {
 		return query(
-			"select distinct pi" +
-			" from Case pi" +
-			" where pi.form.id = ?" +
-			" and pi.number = ?" +
-			" and pi." + getHqlConditionToFilterByUserGroup(),
+			"select distinct c" +
+			" from Case c" +
+			" where c.form.id = ?" +
+			" and c.number = ?" +
+			" and c." + getHqlConditionToFilterByUserGroup(),
 			new Object[] {number, formId});
 	}
 	
@@ -217,9 +217,9 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 		return InfodocContainerFactory.getCaseContainer().getEntity(caseDto.getId());
 	}
 	
-	public Object getValue(Case pi, Property property) {
-		if(pi.getPropertyValues() != null) {
-			for(PropertyValue value : pi.getPropertyValues()) {
+	public Object getValue(Case c, Property property) {
+		if(c.getPropertyValues() != null) {
+			for(PropertyValue value : c.getPropertyValues()) {
 				if(value.getProperty().getId().equals(property.getId())) {
 					return InfodocContainerFactory.getPropertyValueContainer().getValue(value);
 				}
@@ -268,21 +268,21 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 		
 		for(PropertyValue value : propertyValues) {
 			String query =
-			"select distinct pi.id" +
-			" from Case pi" +
-			" left join pi.propertyValues value" +
+			"select distinct c.id" +
+			" from Case c" +
+			" left join c.propertyValues value" +
 			" left join value.classificationsValueValue classificationsValueValue" +
 			" left join value.caseDtosValue caseDtosValue" +
-			" left join pi.activityInstances activityInstance" +
+			" left join c.activityInstances activityInstance" +
 			" left join activityInstance.assignedUsers assignedUser" +
 			" left join activityInstance.user.userGroup initialUserGroup" +
 			" left join activityInstance.assignedUserGroups assignedUserGroup1" +
 			" left join assignedUser.userGroup assignedUserGroup2" +
-			" where pi.form.id = :formId" +
+			" where c.form.id = :formId" +
 			" :foundFilter" +
 			" :lastAcitivityFilter" +
 			" :pendingFilter" +
-			" and ('' || :number is null or '' || pi.number like :number)" +
+			" and ('' || :number is null or '' || c.number like :number)" +
 			" and ('' || :activityId is null or activityInstance.activity.id = :activityId)" +
 			" and ('' || :startDate is null or activityInstance.executionTime >= :startDate)" +
 			" and ('' || :endDate is null or activityInstance.executionTime <= :endDate)" +
@@ -337,9 +337,9 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 			
 			if(value.getCaseDtosValue() != null && !value.getCaseDtosValue().isEmpty()) {
 				
-				for(Case pi : value.getCaseDtosValue()) {
-					if(pi != null && pi.getId() != null) {
-						caseDtosIds.add(pi.getId());
+				for(Case c : value.getCaseDtosValue()) {
+					if(c != null && c.getId() != null) {
+						caseDtosIds.add(c.getId());
 					}
 				}
 				
@@ -355,11 +355,11 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 				query = query.replace(":foundFilter", "");
 				
 			} else {
-				query = query.replace(":foundFilter", "and pi.id in (:foundInstancesIds)");
+				query = query.replace(":foundFilter", "and c.id in (:foundInstancesIds)");
 			}
 			
 			if(lastActivityInstance) {
-				query = query.replace(":lastAcitivityFilter", "and activityInstance.id = (select max(ai.id) from ActivityInstance ai where ai.caseDto.id = pi.id)");
+				query = query.replace(":lastAcitivityFilter", "and activityInstance.id = (select max(ai.id) from ActivityInstance ai where ai.caseDto.id = c.id)");
 			} else {
 				query = query.replace(":lastAcitivityFilter", "");
 			}

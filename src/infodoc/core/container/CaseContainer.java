@@ -132,6 +132,7 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 			" join c.activityInstances firstAi" +
 			" where firstAi.id = (select min(ai.id) from ActivityInstance ai where ai.caseDto.id = c.id)" +
 			" and lastAi.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = c.id)" +
+			" and lastAi.activity.nextActivities is not empty" +
 			" and c.form.id = ?" +
 			" and date(firstAi.executionTime) >= date(?)" +
 			" and date(lastAi.executionTime) <= date(?)",

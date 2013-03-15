@@ -27,7 +27,7 @@ import enterpriseapp.hibernate.dto.Dto;
 
 @Entity
 @Table(name="form", uniqueConstraints={@UniqueConstraint(columnNames={"name", "user_group_id"})})
-@CrudTable(filteringPropertyName="nombre")
+@CrudTable(filteringPropertyName="name")
 public class Form extends Dto implements Serializable {
 
 	private static final long serialVersionUID = 1L;

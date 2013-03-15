@@ -20,7 +20,7 @@ import enterpriseapp.hibernate.dto.Dto;
 
 @Entity
 @Table(name="user_group", uniqueConstraints={@UniqueConstraint(columnNames={"name", "parent_user_group_id"})})
-@CrudTable(filteringPropertyName="nombre")
+@CrudTable(filteringPropertyName="name")
 public class UserGroup extends Dto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

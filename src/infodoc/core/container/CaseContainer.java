@@ -113,13 +113,19 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 	}
 	
 	public List<Case> findByActivityId(Long activityId) {
+		String condition = getHqlConditionToFilterByUserGroup();
+		
+		if(!condition.isEmpty()) {
+			condition = " and c." + condition;
+		}
+		
 		return query(
 				"select distinct c" +
 				" from Case c" +
 				" join c.activityInstances ai" +
 				" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = c.id)" +
 				" and ai.activity.id = ?" +
-				" and c." + getHqlConditionToFilterByUserGroup(),
+				condition,
 				new Object [] {activityId}
 			);
 	}

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<entity-mappings xmlns="http://java.sun.com/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence/orm orm_2_0.xsd" version="2.0">
+
+	<entity class="infodoc.core.dto.Activity"></entity>
+	<entity class="infodoc.core.dto.ActivityInstance"></entity>
+	<entity class="infodoc.core.dto.AuditLog"></entity>
+	<entity class="infodoc.core.dto.Classification"></entity>
+	<entity class="infodoc.core.dto.ClassificationValue"></entity>
+	<entity class="infodoc.core.dto.HqlReport"></entity>
+	<entity class="infodoc.core.dto.HqlReportParameter"></entity>
+	<entity class="infodoc.core.dto.JavaReport"></entity>
+	<entity class="infodoc.core.dto.Notification"></entity>
+	<entity class="infodoc.core.dto.NotificationInstance"></entity>
+	<entity class="infodoc.core.dto.Numeration"></entity>
+	<entity class="infodoc.core.dto.Form"></entity>
+	<entity class="infodoc.core.dto.Case"></entity>
+	<entity class="infodoc.core.dto.Property"></entity>
+	<entity class="infodoc.core.dto.PropertyValue"></entity>
+	<entity class="infodoc.core.dto.User"></entity>
+	<entity class="infodoc.core.dto.UserGroup"></entity>
+	<entity class="infodoc.core.dto.Validation"></entity>
+
+</entity-mappings>

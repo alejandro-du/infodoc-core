@@ -208,7 +208,7 @@ public class CaseForm extends com.vaadin.ui.Form {
 							Set<ClassificationValue> classificationValues = (Set<ClassificationValue>) field.getValue();
 							value.setClassificationsValueValue(classificationValues);
 							
-						} else if(fieldWrapper.getType().equals(FieldType.PROCESS_INSTANCES)) {
+						} else if(fieldWrapper.getType().equals(FieldType.CASES)) {
 							Set<Case> caseDtos = (Set<Case>) field.getValue();
 							value.setCaseDtosValue(caseDtos);
 							

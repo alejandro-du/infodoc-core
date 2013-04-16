@@ -56,7 +56,7 @@ public class PropertyValueContainer extends UserGroupFilteredContainer<PropertyV
 			} else if(fieldWrapper.getType().equals(FieldType.CLASSIFICATION_VALUES)) {
 				value = propertyValue.getClassificationsValueValue();
 				
-			} else if(fieldWrapper.getType().equals(FieldType.PROCESS_INSTANCES)) {
+			} else if(fieldWrapper.getType().equals(FieldType.CASES)) {
 				value = propertyValue.getCaseDtosValue();
 				
 			} else if(fieldWrapper.getType().equals(FieldType.DATE)) {

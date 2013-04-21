@@ -21,17 +21,18 @@ public class FormContainer extends UserGroupFilteredContainer<Form> {
 	}
 	
 	public List<Form> findByDisabled(boolean disabled) {
-		return query("from Form where disabled = ?", new Object[] {disabled});
+		return query("from Form where disabled = ? order by position", new Object[] {disabled});
 	}
 	
 	public List<Form> findByUserId(Long userId) {
 		return query(
-			"select distinct p" +
+			"select distinct f" +
 			" from User u" +
 			" join u.userGroup g" +
 			" join g.activities a" +
-			" join a.form p" +
-			" where u.id = ? and p.disabled is false",
+			" join a.form f" +
+			" where u.id = ? and f.disabled is false" +
+			" order by f.position",
 			new Object[] {userId});
 	}
 	

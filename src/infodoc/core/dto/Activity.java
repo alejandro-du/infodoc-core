@@ -85,6 +85,9 @@ public class Activity extends Dto implements Serializable {
 	)
 	private Set<UserGroup> userGroups;
     
+	@Column(name="position")
+	private Integer position;
+	
 	@Override
 	public String toString() {
 		return form.getName() + "-" + name;
@@ -168,6 +171,14 @@ public class Activity extends Dto implements Serializable {
 
 	public void setUserGroups(Set<UserGroup> userGroups) {
 		this.userGroups = userGroups;
+	}
+
+	public Integer getPosition() {
+		return position;
+	}
+
+	public void setPosition(Integer position) {
+		this.position = position;
 	}
 
 }

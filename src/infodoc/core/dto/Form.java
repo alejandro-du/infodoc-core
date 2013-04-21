@@ -89,6 +89,9 @@ public class Form extends Dto implements Serializable {
 	@Column(name="icon", nullable=false)
     private String icon;
 	
+	@Column(name="position")
+	private Integer position;
+	
 	@Override
 	public String toString() {
 		return userGroup == null ? name : userGroup.getName() + "-" + name;
@@ -208,6 +211,14 @@ public class Form extends Dto implements Serializable {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+	public Integer getPosition() {
+		return position;
+	}
+
+	public void setPosition(Integer position) {
+		this.position = position;
 	}
 
 }

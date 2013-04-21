@@ -21,7 +21,8 @@ public class ActivityContainer extends UserGroupFilteredContainer<Activity> {
 			" join g.activities a" +
 			" where u.id = ?" +
 			" and a.form.id = ?" +
-			" and a.disabled is false",
+			" and a.disabled is false" +
+			" order by a.position",
 			new Object[] {userId, formId});
 	}
 
@@ -30,7 +31,8 @@ public class ActivityContainer extends UserGroupFilteredContainer<Activity> {
 			"select distinct a" +
 			" from Activity a" +
 			" where a.form.id = ?" +
-			" and a.disabled is false",
+			" and a.disabled is false" +
+			" order by a.position",
 			new Object[] {formId});
 	}
 	
@@ -46,7 +48,8 @@ public class ActivityContainer extends UserGroupFilteredContainer<Activity> {
 			" where pi.id = ?" +
 			" and lastAi.id = (select max(ai.id) from ActivityInstance ai where ai.caseDto.id = pi.id)" +
 			" and (assignedU1.id = ? or assignedU2.id = ? or (lastAi.assignedUsers is empty and lastAi.assignedUserGroups is empty))" +
-			" and nextAct.id in (select a.id from User u join u.userGroup ug join ug.activities a where u.id = ?)",
+			" and nextAct.id in (select a.id from User u join u.userGroup ug join ug.activities a where u.id = ?)" +
+			" order by nextAct.position",
 			new Object [] {caseDtoId, userId, userId, userId}
 		);
 	}

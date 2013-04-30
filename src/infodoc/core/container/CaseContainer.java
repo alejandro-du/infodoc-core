@@ -1,14 +1,13 @@
 package infodoc.core.container;
 
-import infodoc.core.dto.Property;
-import infodoc.core.dto.ClassificationValue;
-import infodoc.core.dto.PropertyValue;
-import infodoc.core.dto.Case;
-import infodoc.core.dto.Form;
 import infodoc.core.dto.Activity;
 import infodoc.core.dto.ActivityInstance;
+import infodoc.core.dto.Case;
+import infodoc.core.dto.ClassificationValue;
+import infodoc.core.dto.Form;
+import infodoc.core.dto.Property;
+import infodoc.core.dto.PropertyValue;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -25,24 +24,6 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 		super(Case.class, "form.userGroup.id");
 	}
 
-	@Override
-	public synchronized Serializable saveEntity(Case caseDto) {
-		try {
-			sessionManager.getSession().beginTransaction();
-			
-			Long nextValue = InfodocContainerFactory.getNumerationContainer().getNextValue(caseDto.getForm().getId());
-			caseDto.setNumber(nextValue);
-			
-			Serializable serializable = super.saveEntity(caseDto);
-			
-			return serializable;
-			
-		} catch (Exception e) {
-			sessionManager.getSession().getTransaction().rollback();
-			throw new RuntimeException(e);
-		}
-	}
-	
 	public Case getCurrentByNumber(Long number) {
 		return singleQuery(
 			"select c" +
@@ -200,8 +181,13 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 	}
 
 	// TODO: validate consistency
-	public Case saveInstace(Case instance, List<PropertyValue> propertyValues, ActivityInstance activityInstace) {
+	public Case saveInstace(Case instance, List<PropertyValue> propertyValues, ActivityInstance activityInstace, boolean useNumeration) {
 		try {
+			if(useNumeration) {
+				Long nextValue = InfodocContainerFactory.getNumerationContainer().getNextValue(instance.getForm().getId());
+				instance.setNumber(nextValue);
+			}
+			
 			InfodocContainerFactory.getCaseContainer().saveEntity(instance);
 			return saveActivityInstance(instance, propertyValues, activityInstace);
 			

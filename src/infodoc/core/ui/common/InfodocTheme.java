@@ -100,12 +100,12 @@ public class InfodocTheme extends ChameleonTheme {
 		
 		Collection<File> files = fileContainer.getItemIds();
 		
-		for(File archivo : files) {
-			if(archivo.isFile()) {
-				String path = archivo.getPath();
+		for(File file : files) {
+			if(file.isFile()) {
+				String path = file.getPath();
 				String icon = path.substring(path.indexOf(InfodocTheme.iconsDirectory));
 				select.addItem(icon);
-				select.setItemCaption(icon, archivo.getName());
+				select.setItemCaption(icon, file.getName());
 				select.setItemIcon(icon, new ThemeResource(icon));
 			}
 		}

@@ -254,7 +254,7 @@ public class CaseBox extends CustomComponent {
 			assignedTo = activityInstance.getAssignedUserGroups().toString().replace("[", "").replace("]", "");
 		}
 		
-		if(!assignedTo.isEmpty() && !assignedTo.equals(executedBy)) {
+		if(!assignedTo.isEmpty()) {
 			description += " -> " + "<span class='" + InfodocTheme.CLASS_END_USERS + "'>" + assignedTo + "<span>";
 		}
 		

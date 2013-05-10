@@ -222,23 +222,23 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 		return null;
 	}
 	
-	public Object getValue(Case c, String propertyName) {
+	public PropertyValue getPropertyValue(Case c, String propertyName) {
 		
 		if(c.getPropertyValues() != null) {
 			if(!propertyName.contains(".")) {
 				for(PropertyValue value : c.getPropertyValues()) {
 					if(value.getProperty().getName().equals(propertyName)) {
-						return InfodocContainerFactory.getPropertyValueContainer().getValue(value);
+						return value;
 					}
 				}
 			} else {
-				String subCasePropertyName = propertyName.substring(0, propertyName.indexOf(".") - 1);
-				propertyName = propertyName.substring(propertyName.indexOf(".") + 1, propertyName.length() - 1);
+				String subCasePropertyName = propertyName.substring(0, propertyName.indexOf("."));
+				propertyName = propertyName.substring(propertyName.indexOf(".") + 1, propertyName.length());
 				
 				for(PropertyValue value : c.getPropertyValues()) {
 					if(value.getProperty().getName().equals(subCasePropertyName)) {
 						c = value.getCaseDtosValue().iterator().next();
-						return getValue(c, propertyName);
+						return getPropertyValue(c, propertyName);
 					}
 				}
 			}

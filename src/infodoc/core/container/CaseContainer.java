@@ -253,30 +253,6 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 		return null;
 	}
 	
-	public PropertyValue getPropertyValue(Collection<PropertyValue> propertyValues, String propertyName) {
-		
-		if(propertyValues != null) {
-			if(!propertyName.contains(".")) {
-				for(PropertyValue value : propertyValues) {
-					if(value.getProperty().getName().equals(propertyName)) {
-						return value;
-					}
-				}
-			} else {
-				String subCasePropertyName = propertyName.substring(0, propertyName.indexOf("."));
-				propertyName = propertyName.substring(propertyName.indexOf(".") + 1, propertyName.length());
-				
-				for(PropertyValue value : propertyValues) {
-					if(value.getProperty().getName().equals(subCasePropertyName)) {
-						return getPropertyValue(value.getCaseDtosValue().iterator().next().getPropertyValues(), propertyName);
-					}
-				}
-			}
-		}
-		
-		return null;
-	}
-	
 	public ActivityInstance getFisrtActivityInstance(Case instance) {
 		ActivityInstance activityInstance = null;
 		

@@ -1,6 +1,7 @@
 package infodoc.core.container;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 import infodoc.core.InfodocConstants;
 import infodoc.core.dto.PropertyValue;
@@ -33,6 +34,30 @@ public class PropertyValueContainer extends UserGroupFilteredContainer<PropertyV
 		return singleQuery(
 			"from PropertyValue where caseDto.id = ? and property.id = ?",
 			new Object[] {caseId, propertyId});
+	}
+	
+	public PropertyValue getByName(Collection<PropertyValue> propertyValues, String propertyName) {
+		
+		if(propertyValues != null) {
+			if(!propertyName.contains(".")) {
+				for(PropertyValue value : propertyValues) {
+					if(value.getProperty().getName().equals(propertyName)) {
+						return value;
+					}
+				}
+			} else {
+				String subCasePropertyName = propertyName.substring(0, propertyName.indexOf("."));
+				propertyName = propertyName.substring(propertyName.indexOf(".") + 1, propertyName.length());
+				
+				for(PropertyValue value : propertyValues) {
+					if(value.getProperty().getName().equals(subCasePropertyName)) {
+						return getByName(value.getCaseDtosValue().iterator().next().getPropertyValues(), propertyName);
+					}
+				}
+			}
+		}
+		
+		return null;
 	}
 	
 	public Object getValue(PropertyValue propertyValue) {

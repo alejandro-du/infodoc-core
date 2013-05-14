@@ -80,9 +80,9 @@ public class CaseForm extends com.vaadin.ui.Form {
 				Field field;
 				
 				if(showShearchProperties) {
-					field = fieldWrapper.getSearchField(property, this, activity, instance.getForm(), getApplication());
+					field = fieldWrapper.getSearchField(property, this, activity, instance.getForm(), user);
 				} else {
-					field = fieldWrapper.getField(property, this, activity, instance.getForm(), getApplication());
+					field = fieldWrapper.getField(property, this, activity, instance.getForm(), user);
 				}
 				
 				if(field != null) {

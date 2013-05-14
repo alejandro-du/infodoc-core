@@ -130,7 +130,7 @@ public class CaseBox extends CustomComponent {
 		}
 		
 		if(fieldFactory.getType() == null) {
-			component = fieldFactory.getField(property, new CaseForm(caseDto, null, null), null, caseDto.getForm(), getApplication());
+			component = fieldFactory.getField(property, new CaseForm(caseDto, null, null), null, caseDto.getForm(), (User) EnterpriseApplication.getInstance().getUser());
 			
 			if(component != null) {
 				layoutToAddTo.addComponent(component);

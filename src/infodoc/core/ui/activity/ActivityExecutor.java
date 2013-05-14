@@ -1,12 +1,12 @@
 package infodoc.core.ui.activity;
 
 import infodoc.core.container.InfodocContainerFactory;
-import infodoc.core.dto.Case;
-import infodoc.core.dto.UserGroup;
-import infodoc.core.dto.Form;
 import infodoc.core.dto.Activity;
 import infodoc.core.dto.ActivityInstance;
+import infodoc.core.dto.Case;
+import infodoc.core.dto.Form;
 import infodoc.core.dto.User;
+import infodoc.core.dto.UserGroup;
 
 import java.util.Calendar;
 import java.util.Set;

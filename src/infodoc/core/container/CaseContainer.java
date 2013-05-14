@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Query;
 
@@ -111,6 +112,17 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 			);
 	}
 	
+	public List<Case> findByLastActivityId(Long activityId) {
+		return query(
+			"select distinct c" +
+			" from Case c" +
+			" join c.activityInstances lastAi" +
+			" where lastAi.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = c.id)" +
+			" and lastAi.activity.id = ?",
+			new Object [] {activityId}
+		);
+	}
+	
 	public List<Case> findPendingByFormId(Long formId, Date from, Date to) {
 		return query(
 			"select distinct c" +
@@ -125,6 +137,25 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 			" and date(lastAi.executionTime) <= date(?)",
 			new Object [] {formId, from, to}
 		);
+	}
+	
+	public List<Case> findPendingByFormId(Long formId) {
+		return query(
+			"select distinct c" +
+			" from Case c" +
+			" join c.activityInstances lastAi" +
+			" join c.activityInstances firstAi" +
+			" where firstAi.id = (select min(ai.id) from ActivityInstance ai where ai.caseDto.id = c.id)" +
+			" and lastAi.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = c.id)" +
+			" and lastAi.activity.nextActivities is not empty" +
+			" and c.form.id = ?" +
+			new Object [] {formId}
+		);
+	}
+	
+	public boolean isPending(Case caseDto) {
+		Set<Activity> nextActivities = getLastActivityInstance(caseDto).getActivity().getNextActivities();
+		return nextActivities != null && !nextActivities.isEmpty();
 	}
 	
 	public List<Case> findFinishedByFormId(Long formId, Date from, Date to) {

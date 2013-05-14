@@ -253,11 +253,11 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 		return null;
 	}
 	
-	public PropertyValue getPropertyValue(Case c, String propertyName) {
+	public PropertyValue getPropertyValue(Collection<PropertyValue> propertyValues, String propertyName) {
 		
-		if(c.getPropertyValues() != null) {
+		if(propertyValues != null) {
 			if(!propertyName.contains(".")) {
-				for(PropertyValue value : c.getPropertyValues()) {
+				for(PropertyValue value : propertyValues) {
 					if(value.getProperty().getName().equals(propertyName)) {
 						return value;
 					}
@@ -266,10 +266,9 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 				String subCasePropertyName = propertyName.substring(0, propertyName.indexOf("."));
 				propertyName = propertyName.substring(propertyName.indexOf(".") + 1, propertyName.length());
 				
-				for(PropertyValue value : c.getPropertyValues()) {
+				for(PropertyValue value : propertyValues) {
 					if(value.getProperty().getName().equals(subCasePropertyName)) {
-						c = value.getCaseDtosValue().iterator().next();
-						return getPropertyValue(c, propertyName);
+						return getPropertyValue(value.getCaseDtosValue().iterator().next().getPropertyValues(), propertyName);
 					}
 				}
 			}

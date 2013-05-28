@@ -21,7 +21,22 @@ public class NumerationContainer extends UserGroupFilteredContainer<Numeration> 
 		}
 	}
 	
-	public synchronized Long getNextValue(Long formId) {
+	public synchronized Long getNextValue(Long numerationId) {
+		Long next = null;
+		
+		Numeration numeration = getEntity(numerationId);
+		
+		if(numeration != null) {
+			restartIfNeeded(numeration);
+			next = numeration.getNextValue();
+			numeration.setNextValue(next + 1);
+			saveOrUpdateEntity(numeration);
+		}
+		
+		return next;
+	}
+	
+	public synchronized Long getNextCaseNumber(Long formId) {
 		Long next = null;
 		
 		Form form = InfodocContainerFactory.getFormContainer().getEntity(formId);

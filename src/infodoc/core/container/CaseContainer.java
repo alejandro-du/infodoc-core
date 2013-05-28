@@ -215,7 +215,7 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 	public Case saveInstace(Case instance, List<PropertyValue> propertyValues, ActivityInstance activityInstace, boolean useNumeration) {
 		try {
 			if(useNumeration) {
-				Long nextValue = InfodocContainerFactory.getNumerationContainer().getNextValue(instance.getForm().getId());
+				Long nextValue = InfodocContainerFactory.getNumerationContainer().getNextCaseNumber(instance.getForm().getId());
 				instance.setNumber(nextValue);
 			}
 			

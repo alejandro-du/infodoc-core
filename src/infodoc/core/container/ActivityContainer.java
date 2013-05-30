@@ -36,6 +36,17 @@ public class ActivityContainer extends UserGroupFilteredContainer<Activity> {
 			new Object[] {formId});
 	}
 	
+	public Activity getByFormIdAndName(Long formId, String name) {
+		return singleQuery(
+			"select distinct a" +
+			" from Activity a" +
+			" where a.form.id = ?" +
+			" and a.name = ?" +
+			" and a.disabled is false" +
+			" order by a.position",
+			new Object[] {formId, name});
+	}
+	
 	public List<Activity> findByCaseIdAndUserId(Long caseDtoId, Long userId) {
 		return query(
 			"select distinct nextAct" +

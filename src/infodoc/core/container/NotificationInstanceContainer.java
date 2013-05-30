@@ -156,6 +156,11 @@ public class NotificationInstanceContainer extends UserGroupFilteredContainer<No
 			}
 		}
 		
+		if(notification.isNotifyFirstUser()) {
+			ActivityInstance first = InfodocContainerFactory.getActivityInstanceContainer().getFirstByCaseId(instance.getActivityInstance().getCaseDto().getId());
+			recipients.add(first.getUser().getLogin());
+		}
+		
 		if(notification.isNotifyCurrentUserGroup()) {
 			List<User> users = InfodocContainerFactory.getUserContainer().findByUserGroupId(instance.getActivityInstance().getUser().getUserGroup().getId());
 			

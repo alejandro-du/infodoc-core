@@ -38,6 +38,23 @@ public class ActivityInstanceContainer extends UserGroupFilteredContainer<Activi
 			null, null, null, null, count, null);
 	}
 
+	public ActivityInstance getFirstByCaseId(Long caseId) {
+		String condition = getHqlConditionToFilterByUserGroup();
+		
+		if(!condition.isEmpty()) {
+			condition = "where ai." + condition;
+		}
+		
+		return singleQuery(
+			"select distinct ai" +
+			" from ActivityInstance ai " + condition +
+			" and ai.caseDto.id = ?" +
+			" order by ai.executionTime asc" +
+			" limit 1",
+			new Object[] {caseId}
+		);
+	}
+
 	public Long countByActivityIdAndUserId(Long activityId, Long userId, Date from, Date to) {
 		return (Long) singleSpecialQuery(
 			"select count(distinct ai.id)" +

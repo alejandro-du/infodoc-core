@@ -40,6 +40,9 @@ public class Notification extends Dto implements Serializable {
 	@Column(name="notify_next_users", nullable=false)
 	private boolean notifyNextUsers;
 	
+	@Column(name="notify_first_user", nullable=false)
+	private boolean notifyFirstUser;
+	
 	@Column(name="notify_current_user_group", nullable=false)
 	private boolean notifyCurrentUserGroup;
 	
@@ -123,6 +126,14 @@ public class Notification extends Dto implements Serializable {
 		this.notifyNextUsers = notifyNextUsers;
 	}
 
+	public boolean isNotifyFirstUser() {
+		return notifyFirstUser;
+	}
+
+	public void setNotifyFirstUser(boolean notifyFirstUser) {
+		this.notifyFirstUser = notifyFirstUser;
+	}
+	
 	public boolean isNotifyCurrentUserGroup() {
 		return notifyCurrentUserGroup;
 	}
@@ -226,5 +237,5 @@ public class Notification extends Dto implements Serializable {
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
 	}
-	
+
 }

@@ -1,5 +1,6 @@
 package infodoc.core.ui.auth;
 
+import infodoc.core.InfodocConstants;
 import infodoc.core.container.InfodocContainerFactory;
 import infodoc.core.container.UserContainer;
 import infodoc.core.dto.User;
@@ -10,6 +11,8 @@ import org.slf4j.LoggerFactory;
 
 import com.vaadin.Application;
 import com.vaadin.terminal.gwt.server.WebBrowser;
+
+import enterpriseapp.EnterpriseApplication;
 
 public class AuthService {
 	
@@ -36,6 +39,8 @@ public class AuthService {
 		
 		loggedUserIds.remove(user.getId());
 		loggedUserApps.remove(user.getId());
+		
+		EnterpriseApplication.getInstance().getHttpServletRequest().getSession().setMaxInactiveInterval(InfodocConstants.appSessionTimeout);
 		
 		application.close();
 	}

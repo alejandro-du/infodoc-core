@@ -8,7 +8,7 @@ public class LoginWindow extends AuthWindow {
 	private static final long serialVersionUID = 1L;
 	
 	public LoginWindow() {
-		super(InfodocConstants.uiLogIn, InfodocConstants.uiLogIn, InfodocConstants.uiUserLogin, InfodocConstants.uiUserPassword, InfodocConstants.uiDefaultLogin, InfodocConstants.uiDefaultPassword);
+		super(InfodocConstants.uiLogIn, InfodocConstants.uiLogIn, InfodocConstants.uiUserLogin, InfodocConstants.uiUserPassword, InfodocConstants.uiDefaultLogin, InfodocConstants.uiDefaultPassword, InfodocConstants.uiStaySignedIn);
 	}
 	
 	@Override

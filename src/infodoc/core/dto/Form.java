@@ -70,6 +70,9 @@ public class Form extends Dto implements Serializable {
     @Column(name="hide_activity_history", nullable=false)
     private boolean hideActivityHistory;
     
+    @Column(name="hide_in_dashboard", nullable=false)
+    private boolean hideInDashboard;
+    
 	@Type(type="text")
 	@Column(name="print_template")
     private String printTemplate;
@@ -159,6 +162,14 @@ public class Form extends Dto implements Serializable {
 
 	public void setHideActivityHistory(boolean hideActivityHistory) {
 		this.hideActivityHistory = hideActivityHistory;
+	}
+
+	public boolean isHideInDashboard() {
+		return hideInDashboard;
+	}
+
+	public void setHideInDashboard(boolean hideInDashboard) {
+		this.hideInDashboard = hideInDashboard;
 	}
 
 	public String getPrintTemplate() {

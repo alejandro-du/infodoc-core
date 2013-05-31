@@ -57,6 +57,7 @@ public abstract class InfodocConstants extends Constants {
 	public static final String uiSecond = Utils.getProperty("ui.second");
 	public static final String uiDefaultUserGroupName = Utils.getProperty("ui.defaultUserGroupName");
 	public static final String uiActivitHistory = Utils.getProperty("ui.activityHistory");
+	public static final String uiShowAllCases = Utils.getProperty("ui.showAllCases");
 	
 	public static final String uiColorYellow = Utils.getProperty("ui.colorYellow");
 	public static final String uiColorBlue = Utils.getProperty("ui.colorBlue");

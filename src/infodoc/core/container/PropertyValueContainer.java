@@ -1,12 +1,13 @@
 package infodoc.core.container;
 
-import java.io.Serializable;
-import java.util.Collection;
-
 import infodoc.core.InfodocConstants;
 import infodoc.core.dto.PropertyValue;
 import infodoc.core.field.FieldFactory;
 import infodoc.core.field.FieldType;
+
+import java.io.Serializable;
+import java.util.Collection;
+
 import enterpriseapp.Utils;
 
 @SuppressWarnings("unchecked")
@@ -42,7 +43,7 @@ public class PropertyValueContainer extends UserGroupFilteredContainer<PropertyV
 			if(!propertyName.contains(".")) {
 				for(PropertyValue value : propertyValues) {
 					if(value.getProperty().getName().equals(propertyName)) {
-						return value;
+						return getEntity(value.getId());
 					}
 				}
 			} else {

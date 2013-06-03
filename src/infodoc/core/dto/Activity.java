@@ -45,6 +45,9 @@ public class Activity extends Dto implements Serializable {
 	@Column(name="disabled", nullable=false)
 	private boolean disabled;
 	
+	@Column(name="hide_in_summary", nullable=false)
+	private boolean hideInSummary;
+	
 	@ManyToOne
 	@JoinColumn(name="form_id", nullable=false)
 	private Form form;
@@ -139,6 +142,14 @@ public class Activity extends Dto implements Serializable {
 
 	public void setDisabled(boolean disabled) {
 		this.disabled = disabled;
+	}
+
+	public boolean isHideInSummary() {
+		return hideInSummary;
+	}
+
+	public void setHideInSummary(boolean hideInSummary) {
+		this.hideInSummary = hideInSummary;
 	}
 
 	public Form getForm() {

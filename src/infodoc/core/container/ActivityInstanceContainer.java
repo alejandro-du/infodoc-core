@@ -48,7 +48,7 @@ public class ActivityInstanceContainer extends UserGroupFilteredContainer<Activi
 		return singleQuery(
 			"select distinct ai" +
 			" from ActivityInstance ai " + condition +
-			" and ai.caseDto.id = ?" +
+			" where ai.caseDto.id = ?" +
 			" order by ai.executionTime asc" +
 			" limit 1",
 			new Object[] {caseId}

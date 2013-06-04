@@ -1,6 +1,7 @@
 package infodoc.core.container;
 
 import infodoc.core.InfodocConstants;
+import infodoc.core.dto.Case;
 import infodoc.core.dto.PropertyValue;
 import infodoc.core.field.FieldFactory;
 import infodoc.core.field.FieldType;
@@ -56,7 +57,10 @@ public class PropertyValueContainer extends UserGroupFilteredContainer<PropertyV
 				
 				for(PropertyValue value : propertyValues) {
 					if(value.getProperty().getName().equals(subCasePropertyName)) {
-						return getByName(value.getCaseDtosValue().iterator().next().getPropertyValues(), propertyName);
+						Case caseDto = value.getCaseDtosValue().iterator().next();
+						caseDto = InfodocContainerFactory.getCaseContainer().getEntity(caseDto.getId());
+						
+						return getByName(caseDto.getPropertyValues(), propertyName);
 					}
 				}
 			}

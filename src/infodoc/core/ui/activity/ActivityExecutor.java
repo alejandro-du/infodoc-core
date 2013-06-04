@@ -58,7 +58,11 @@ public abstract class ActivityExecutor extends CustomComponent {
 	}
 	
 	public User getUser() {
-		return InfodocContainerFactory.getUserContainer().getEntity(user.getId());
+		if(user != null) {
+			return InfodocContainerFactory.getUserContainer().getEntity(user.getId());
+		}
+		
+		return null;
 	}
 
 	public Form getForm() {

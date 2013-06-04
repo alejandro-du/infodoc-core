@@ -200,27 +200,18 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 	}
 	
 	// TODO: validate consistency
-	public Case updateInstance(Case instance, List<PropertyValue> propertyValues, ActivityInstance activityInstance) {
-		try {
-			InfodocContainerFactory.getCaseContainer().saveOrUpdateEntity(instance);
-			return saveActivityInstance(instance, propertyValues, activityInstance);
-			
-		} catch (Exception e) {
-			sessionManager.getSession().getTransaction().rollback();
-			throw new RuntimeException(e);
-		}
-	}
-
-	// TODO: validate consistency
-	public Case saveInstace(Case instance, List<PropertyValue> propertyValues, ActivityInstance activityInstace, boolean useNumeration) {
+	public Case saveInstace(Case caseDto, Collection<PropertyValue> propertyValues, ActivityInstance activityInstace, boolean useNumeration) {
 		try {
 			if(useNumeration) {
-				Long nextValue = InfodocContainerFactory.getNumerationContainer().getNextCaseNumber(instance.getForm().getId());
-				instance.setNumber(nextValue);
+				Long nextValue = InfodocContainerFactory.getNumerationContainer().getNextCaseNumber(caseDto.getForm().getId());
+				caseDto.setNumber(nextValue);
 			}
 			
-			InfodocContainerFactory.getCaseContainer().saveEntity(instance);
-			return saveActivityInstance(instance, propertyValues, activityInstace);
+			InfodocContainerFactory.getCaseContainer().saveEntity(caseDto);
+			saveActivityInstance(caseDto, propertyValues, activityInstace);
+			savePropertyValues(propertyValues);
+			
+			return InfodocContainerFactory.getCaseContainer().getEntity(caseDto.getId());
 			
 		} catch (Exception e) {
 			sessionManager.getSession().getTransaction().rollback();
@@ -228,17 +219,34 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 		}
 	}
 	
-	private Case saveActivityInstance(Case caseDto, List<PropertyValue> propertyValues, ActivityInstance activityInstance) {
+	// TODO: validate consistency
+	public Case updateInstance(Case caseDto, Collection<PropertyValue> propertyValues, ActivityInstance activityInstance) {
+		try {
+			saveActivityInstance(caseDto, propertyValues, activityInstance);
+			savePropertyValues(propertyValues);
+			
+			caseDto.getPropertyValues().addAll(propertyValues);
+			InfodocContainerFactory.getCaseContainer().saveOrUpdateEntity(caseDto);
+			
+			return InfodocContainerFactory.getCaseContainer().getEntity(caseDto.getId());
+			
+		} catch (Exception e) {
+			sessionManager.getSession().getTransaction().rollback();
+			throw new RuntimeException(e);
+		}
+	}
+
+	private void saveActivityInstance(Case caseDto, Collection<PropertyValue> propertyValues, ActivityInstance activityInstance) {
 		activityInstance.setCaseDto(caseDto);
 		InfodocContainerFactory.getActivityInstanceContainer().saveEntity(activityInstance);
-		
+	}
+
+	private void savePropertyValues(Collection<PropertyValue> propertyValues) {
 		if(propertyValues != null) {
 			for(PropertyValue value : propertyValues) {
 				InfodocContainerFactory.getPropertyValueContainer().saveOrUpdateEntity(value);
 			}
 		}
-		
-		return InfodocContainerFactory.getCaseContainer().getEntity(caseDto.getId());
 	}
 	
 	public Object getValue(Case c, Property property) {
@@ -275,7 +283,7 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 
 	public Collection<Long> search(
 		Form form,
-		List<PropertyValue> propertyValues,
+		Collection<PropertyValue> propertyValues,
 		String number,
 		Activity activity,
 		Date startDate,

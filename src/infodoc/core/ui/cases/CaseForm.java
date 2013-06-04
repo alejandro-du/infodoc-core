@@ -2,12 +2,12 @@ package infodoc.core.ui.cases;
 
 import infodoc.core.InfodocConstants;
 import infodoc.core.container.InfodocContainerFactory;
-import infodoc.core.dto.Property;
-import infodoc.core.dto.ClassificationValue;
-import infodoc.core.dto.PropertyValue;
-import infodoc.core.dto.Case;
-import infodoc.core.dto.Form;
 import infodoc.core.dto.Activity;
+import infodoc.core.dto.Case;
+import infodoc.core.dto.ClassificationValue;
+import infodoc.core.dto.Form;
+import infodoc.core.dto.Property;
+import infodoc.core.dto.PropertyValue;
 import infodoc.core.dto.User;
 import infodoc.core.dto.Validation;
 import infodoc.core.field.FieldFactory;
@@ -15,10 +15,11 @@ import infodoc.core.field.FieldType;
 import infodoc.core.ui.common.InfodocTheme;
 import infodoc.core.ui.validator.ValidatorFactory;
 
-import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.terminal.ThemeResource;
@@ -168,8 +169,8 @@ public class CaseForm extends com.vaadin.ui.Form {
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<PropertyValue> getPropertyValues() {
-		List<PropertyValue> values = new ArrayList<PropertyValue>();
+	public Collection<PropertyValue> getPropertyValues() {
+		TreeSet<PropertyValue> values = new TreeSet<PropertyValue>();
 		
 		for(Property property : properties) {
 			Field field = getField(property.getName());
@@ -237,7 +238,7 @@ public class CaseForm extends com.vaadin.ui.Form {
 	@Override
     public void validate() throws InvalidValueException {
 		List<Property> properties = InfodocContainerFactory.getPropertyContainer().findByUserIdAndFormIdAndActivityId(user.getId(), instance.getForm().getId(), activity.getId());
-		List<PropertyValue> values = getPropertyValues();
+		Collection<PropertyValue> values = getPropertyValues();
 		
 		for(PropertyValue value : values) {
 			if(!properties.contains(value.getProperty())) {

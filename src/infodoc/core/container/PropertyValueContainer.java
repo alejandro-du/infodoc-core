@@ -38,12 +38,16 @@ public class PropertyValueContainer extends UserGroupFilteredContainer<PropertyV
 	}
 	
 	public PropertyValue getByName(Collection<PropertyValue> propertyValues, String propertyName) {
-		
 		if(propertyValues != null) {
 			if(!propertyName.contains(".")) {
 				for(PropertyValue value : propertyValues) {
 					if(value.getProperty().getName().equals(propertyName)) {
-						return getEntity(value.getId());
+						
+						if(value.getId() != null) {
+							value = getEntity(value.getId());
+						}
+						
+						return value;
 					}
 				}
 			} else {

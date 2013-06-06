@@ -406,7 +406,7 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 			q.setParameter("formId", form.getId());
 			q.setParameter("propertyId", value.getProperty().getId());
 			q.setParameter("stringValue", value.getStringValue() == null || value.getStringValue().isEmpty() ? null : "%" + value.getStringValue() + "%");
-			q.setParameter("booleanValue", value.getBooleanValue() == null || ! value.getBooleanValue() ? null : value.getBooleanValue());
+			q.setParameter("booleanValue", value.isBooleanValue() == null || ! value.isBooleanValue() ? null : value.isBooleanValue());
 			q.setParameter("dateValue", value.getDateValue());
 			q.setParameter("longValue", value.getLongValue());
 			q.setParameter("number", number == null || number.isEmpty() ? null : number);

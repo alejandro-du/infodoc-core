@@ -149,7 +149,7 @@ public class PropertyValue extends Dto implements Serializable, Comparator<Prope
 		this.stringValue = stringValue;
 	}
 
-	public Boolean getBooleanValue() {
+	public Boolean isBooleanValue() {
 		return booleanValue;
 	}
 

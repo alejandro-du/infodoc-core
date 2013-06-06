@@ -85,7 +85,7 @@ public class PropertyValueContainer extends UserGroupFilteredContainer<PropertyV
 				value = propertyValue.getStringValue();
 				
 			} else if(fieldWrapper.getType().equals(FieldType.BOOLEAN)) {
-				value = propertyValue.getBooleanValue();
+				value = propertyValue.isBooleanValue();
 				
 			} else if(fieldWrapper.getType().equals(FieldType.CLASSIFICATION_VALUES)) {
 				value = propertyValue.getClassificationsValueValue();
@@ -120,8 +120,8 @@ public class PropertyValueContainer extends UserGroupFilteredContainer<PropertyV
 		} else if(propertyValue.getStringValue() != null) {
 			value = propertyValue.getStringValue();
 			
-		} else if(propertyValue.getBooleanValue() != null) {
-			value = propertyValue.getBooleanValue() ? InfodocConstants.uiYes : InfodocConstants.uiNo;
+		} else if(propertyValue.isBooleanValue() != null) {
+			value = propertyValue.isBooleanValue() ? InfodocConstants.uiYes : InfodocConstants.uiNo;
 			
 		} else if(propertyValue.getClassificationsValueValue() != null && !propertyValue.getClassificationsValueValue().isEmpty()) {
 			value = propertyValue.getClassificationsValueValue().toString().replace("[", "").replace("]", "");

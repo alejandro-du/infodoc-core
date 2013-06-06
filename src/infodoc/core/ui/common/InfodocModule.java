@@ -1,5 +1,7 @@
 package infodoc.core.ui.common;
 
+import java.io.Serializable;
+
 import infodoc.core.ui.fieldfactory.InfodocFieldFactory;
 
 import com.vaadin.terminal.Resource;
@@ -10,8 +12,10 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import enterpriseapp.ui.crud.CrudComponent;
 import enterpriseapp.ui.window.Module;
 
-public abstract class InfodocModule implements Module {
+public abstract class InfodocModule implements Module, Serializable {
 	
+	private static final long serialVersionUID = 1L;
+
 	@Override
 	public void init() { }
 	

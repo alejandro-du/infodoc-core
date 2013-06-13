@@ -225,7 +225,10 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 			saveActivityInstance(caseDto, propertyValues, activityInstance);
 			savePropertyValues(propertyValues);
 			
-			caseDto.getPropertyValues().addAll(propertyValues);
+			if(propertyValues != null) {
+				caseDto.getPropertyValues().addAll(propertyValues);
+			}
+			
 			InfodocContainerFactory.getCaseContainer().saveOrUpdateEntity(caseDto);
 			
 			return InfodocContainerFactory.getCaseContainer().getEntity(caseDto.getId());

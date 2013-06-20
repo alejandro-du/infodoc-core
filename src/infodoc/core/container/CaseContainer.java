@@ -68,6 +68,22 @@ public class CaseContainer extends UserGroupFilteredContainer<Case> {
 		);
 	}
 
+	public List<Case> findAvailableByUserIdAndActivityId(Long userId, Long activityId) {
+		return query(
+			"select distinct c" +
+			" from Case c" +
+			" join c.activityInstances ai" +
+			" left join ai.assignedUsers assignedU1" +
+			" left join ai.assignedUserGroups assignedUG" +
+			" left join assignedUG.users assignedU2" +
+			" where ai.id = (select max(ai2.id) from ActivityInstance ai2 where ai2.caseDto.id = c.id)" +
+			" and (assignedU1.id = ? or assignedU2.id = ? or (ai.assignedUsers is empty and ai.assignedUserGroups is empty))" +
+			" and ai.activity.id = ?" +
+			" order by ai.executionTime desc",
+			new Object [] {userId, userId, activityId}
+		);
+	}
+
 	public List<Case> findAssignedToOtherUserByUserIdAndNextActivityId(Long userId, Long activityId) {
 		return query(
 			"select distinct c" +

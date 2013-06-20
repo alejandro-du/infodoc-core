@@ -21,7 +21,7 @@ public abstract class InfodocConstants extends Constants {
 	public static final String uiUserLogin = Utils.getProperty("ui.user.login");
 	public static final String uiUserPassword = Utils.getProperty("ui.user.password");
 	public static final String uiLogIn = Utils.getProperty("ui.logIn");
-	public static final String uiStaySignedIn = Utils.getProperty("ui.staySignedIn");
+	public static final String uiRememberMe = Utils.getProperty("ui.rememberMe");
 	public static final String uiWrongCredentials = Utils.getProperty("ui.worngCredentials");
 	public static final String uiOptions = Utils.getProperty("ui.options");
 	public static final String uiLogout = Utils.getProperty("ui.logout");
